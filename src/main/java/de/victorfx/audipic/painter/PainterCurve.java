@@ -30,7 +30,7 @@ public class PainterCurve implements IPainter {
     @Override
     public void paintMagic(double timestamp, double duration, float magnitudes, float phases) {
         timestamp = (int) timestamp;
-        if (timestamp % 3 == 0 || timestamp % 3 == 2) {
+        if (timestamp % 6 == 0 || timestamp % 3 == 5) {
             lastX += (cwidth / magnitudes) * vorzeichen;
             if (lastX >= cwidth) {
                 vorzeichen = 1;
@@ -39,8 +39,26 @@ public class PainterCurve implements IPainter {
                 vorzeichen = -1;
             }
         }
-        if (timestamp % 3 == 1 || timestamp % 3 == 2) {
+        if (timestamp % 6 == 1 || timestamp % 3 == 5) {
             lastY += (cheight / magnitudes) * vorzeichen;
+            if (lastY >= cheight) {
+                vorzeichen = 1;
+            }
+            if (lastY <= 0) {
+                vorzeichen = -1;
+            }
+        }
+        if (timestamp % 6 == 2 || timestamp % 3 == 5) {
+            lastX -= (cwidth / magnitudes) * vorzeichen;
+            if (lastX >= cwidth) {
+                vorzeichen = 1;
+            }
+            if (lastX <= 0) {
+                vorzeichen = -1;
+            }
+        }
+        if (timestamp % 6 == 3 || timestamp % 3 == 5) {
+            lastY -= (cheight / magnitudes) * vorzeichen;
             if (lastY >= cheight) {
                 vorzeichen = 1;
             }

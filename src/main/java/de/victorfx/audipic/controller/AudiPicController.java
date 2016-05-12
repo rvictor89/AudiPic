@@ -1,14 +1,10 @@
 package de.victorfx.audipic.controller;
 
-import de.victorfx.audipic.painter.IPainter;
-import de.victorfx.audipic.painter.PainterCurve;
-import de.victorfx.audipic.painter.PainterLine;
-import de.victorfx.audipic.painter.PainterOval;
+import de.victorfx.audipic.painter.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.AudioSpectrumListener;
@@ -34,8 +30,6 @@ public class AudiPicController implements Initializable {
     public VBox settingsBox;
     private MediaPlayer mediaPlayer;
     private GraphicsContext context;
-    private double lastX = 0;
-    private double lastY = 0;
     private List<IPainter> painters = new ArrayList<>();
     private GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 
@@ -51,8 +45,9 @@ public class AudiPicController implements Initializable {
         context.setFill(Color.BLACK);
 
         painters.add(new PainterLine());
-        painters.add(new PainterCurve());
-        painters.add(new PainterOval());
+        painters.add(new PainterLineTwo());
+        //painters.add(new PainterCurve());
+       // painters.add(new PainterOval());
 
         for (int i = 0; i < painters.size(); i++) {
             Canvas canvas = new Canvas();
@@ -77,7 +72,7 @@ public class AudiPicController implements Initializable {
             mediaPlayer = new MediaPlayer(media);
             mediaPlayer.setAudioSpectrumListener(new SpektrumListener());
             mediaPlayer.setAudioSpectrumInterval(1);
-            mediaPlayer.setAudioSpectrumNumBands(3);
+            mediaPlayer.setAudioSpectrumNumBands(painters.size());
             mediaPlayer.setAutoPlay(true);
         }
     }

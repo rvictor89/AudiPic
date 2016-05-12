@@ -7,7 +7,7 @@ import javafx.scene.paint.Color;
 /**
  * @author Ramon Victor Mai 2016.
  */
-public class PainterLine implements IPainter {
+public class PainterLineTwo implements IPainter {
 
     private GraphicsContext context;
     private double lastX = 0;
@@ -22,7 +22,7 @@ public class PainterLine implements IPainter {
         this.cheight = cheight;
         this.cwidth = cwidth;
         context.beginPath();
-        context.setStroke(Color.GREEN);
+        context.setStroke(Color.RED);
         context.setLineWidth(10);
         context.setGlobalBlendMode(BlendMode.EXCLUSION);
         lastX = cwidth / 2;
@@ -34,28 +34,28 @@ public class PainterLine implements IPainter {
     public void paintMagic(double timestamp, double duration, float magnitudes, float phases) {
         timestamp = (int) timestamp;
         context.setGlobalAlpha((-magnitudes)/100);
-        if (timestamp % 4 == 0) {
+        if (timestamp % 4 == 2) {
             lastX += (cwidth / magnitudes)+ timestamp * 10;
             if (lastX >= cwidth || lastX <= 0) {
                 lastX = cwidth / 2;
                 lastY = cheight / 2;
             }
         }
-        if (timestamp % 4 == 1) {
+        if (timestamp % 4 == 3) {
             lastY += (cheight / magnitudes)+ timestamp * 10;
             if (lastY >= cheight || lastY <= 0) {
                 lastX = cwidth / 2;
                 lastY = cheight / 2;
             }
         }
-        if (timestamp % 4 == 2) {
+        if (timestamp % 4 == 0) {
             lastX -= (cwidth / magnitudes)+ timestamp * 10;
             if (lastX >= cwidth || lastX <= 0) {
                 lastX = cwidth / 2;
                 lastY = cheight / 2;
             }
         }
-        if (timestamp % 4 == 3) {
+        if (timestamp % 4 == 1) {
             lastY -= (cheight / magnitudes) + timestamp * 10;
             if (lastY >= cheight || lastY <= 0) {
                 lastX = cwidth / 2;
