@@ -1,11 +1,16 @@
 package de.victorfx.audipic.controller;
 
+import de.victorfx.audipic.painter.IPainter;
+import de.victorfx.audipic.painter.PainterTest;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.media.AudioSpectrumListener;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 
 import java.io.File;
@@ -18,11 +23,26 @@ import java.util.ResourceBundle;
 public class AudiPicController implements Initializable {
     public Canvas canvas;
     public FileChooser fc;
+    public BorderPane borderPane;
     private MediaPlayer mediaPlayer;
+    private GraphicsContext context;
+    private double lastX = 0;
+    private double lastY = 0;
+    private double vorzeichen = 1;
+    private IPainter painter;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        context = canvas.getGraphicsContext2D();
+        context.setFill(Color.WHITE);
+        context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        context.setFill(Color.BLACK);
+        context.beginPath();
+        lastX = canvas.getWidth()/2;
+        lastY = canvas.getHeight()/2;
+        context.moveTo(lastX, lastY);
+        painter = new PainterTest();
+        painter.setGraphicContextForMagic(context, canvas.getWidth(), canvas.getHeight());
     }
 
     @FXML
@@ -50,7 +70,7 @@ public class AudiPicController implements Initializable {
     private class SpektrumListener implements AudioSpectrumListener {
         @Override
         public void spectrumDataUpdate(double timestamp, double duration, float[] magnitudes, float[] phases) {
-            System.out.println(timestamp + " : " + duration + " : " + magnitudes[0] + " : " + phases[0]);
+           painter.paintMagic(timestamp, duration, magnitudes[0], phases[0]);
         }
     }
 }
