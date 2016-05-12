@@ -1,12 +1,14 @@
 package de.victorfx.audipic.controller;
 
 import de.victorfx.audipic.painter.IPainter;
-import de.victorfx.audipic.painter.PainterTest;
+import de.victorfx.audipic.painter.PainterCurve;
+import de.victorfx.audipic.painter.PainterLine;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.media.AudioSpectrumListener;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -15,6 +17,8 @@ import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -23,13 +27,12 @@ import java.util.ResourceBundle;
 public class AudiPicController implements Initializable {
     public Canvas canvas;
     public FileChooser fc;
-    public BorderPane borderPane;
+    public Pane canvasPane;
     private MediaPlayer mediaPlayer;
     private GraphicsContext context;
     private double lastX = 0;
     private double lastY = 0;
-    private double vorzeichen = 1;
-    private IPainter painter;
+    private List<IPainter> painters = new ArrayList<>();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -37,12 +40,17 @@ public class AudiPicController implements Initializable {
         context.setFill(Color.WHITE);
         context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         context.setFill(Color.BLACK);
-        context.beginPath();
-        lastX = canvas.getWidth()/2;
-        lastY = canvas.getHeight()/2;
-        context.moveTo(lastX, lastY);
-        painter = new PainterTest();
-        painter.setGraphicContextForMagic(context, canvas.getWidth(), canvas.getHeight());
+
+        painters.add(new PainterLine());
+        painters.add(new PainterCurve());
+
+        for (int i = 0; i < painters.size(); i++) {
+            Canvas canvas = new Canvas();
+            canvas.setHeight(720);
+            canvas.setWidth(1280);
+            canvasPane.getChildren().add(canvas);
+            painters.get(i).setGraphicContextForMagic(canvas.getGraphicsContext2D(), canvas.getWidth(), canvas.getHeight());
+        }
     }
 
     @FXML
@@ -70,7 +78,9 @@ public class AudiPicController implements Initializable {
     private class SpektrumListener implements AudioSpectrumListener {
         @Override
         public void spectrumDataUpdate(double timestamp, double duration, float[] magnitudes, float[] phases) {
-           painter.paintMagic(timestamp, duration, magnitudes[0], phases[0]);
+            for (int i = 0; i < painters.size(); i++) {
+                painters.get(i).paintMagic(timestamp, duration, magnitudes[i], phases[i]);
+            }
         }
     }
 }

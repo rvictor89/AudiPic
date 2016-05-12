@@ -1,12 +1,12 @@
 package de.victorfx.audipic.painter;
 
-import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 /**
  * @author Ramon Victor Mai 2016.
  */
-public class PainterTest implements IPainter {
+public class PainterCurve implements IPainter {
 
     private GraphicsContext context;
     private double lastX = 0;
@@ -21,8 +21,9 @@ public class PainterTest implements IPainter {
         this.cheight = cheight;
         this.cwidth = cwidth;
         context.beginPath();
-        lastX = cwidth/2;
-        lastY = cheight/2;
+        context.setStroke(Color.RED);
+        lastX = cwidth / 2;
+        lastY = cheight / 2;
         context.moveTo(lastX, lastY);
     }
 
@@ -31,7 +32,7 @@ public class PainterTest implements IPainter {
         System.out.println(timestamp + " : " + duration + " : " + magnitudes + " : " + phases);
         timestamp = (int) timestamp;
         if (timestamp % 3 == 0 || timestamp % 3 == 2) {
-            lastX += (cwidth/magnitudes)*vorzeichen;
+            lastX += (cwidth / magnitudes) * vorzeichen;
             if (lastX >= cwidth) {
                 vorzeichen = 1;
             }
@@ -40,7 +41,7 @@ public class PainterTest implements IPainter {
             }
         }
         if (timestamp % 3 == 1 || timestamp % 3 == 2) {
-            lastY += (cheight/magnitudes)*vorzeichen;
+            lastY += (cheight / magnitudes) * vorzeichen;
             if (lastY >= cheight) {
                 vorzeichen = 1;
             }
@@ -48,7 +49,7 @@ public class PainterTest implements IPainter {
                 vorzeichen = -1;
             }
         }
-        context.lineTo(lastX,lastY);
+        context.quadraticCurveTo(lastY, lastX, lastX, lastY);
         context.stroke();
         context.save();
     }
