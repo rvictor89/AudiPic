@@ -56,8 +56,8 @@ public class AudiPicController implements Initializable {
 
         for (int i = 0; i < painters.size(); i++) {
             Canvas canvas = new Canvas();
-            canvas.setHeight(720);
-            canvas.setWidth(1280);
+            canvas.setHeight(height);
+            canvas.setWidth(width);
             canvasPane.getChildren().add(canvas);
             painters.get(i).setGraphicContextForMagic(canvas.getGraphicsContext2D(), canvas.getWidth(), canvas.getHeight());
         }

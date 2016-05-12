@@ -29,7 +29,6 @@ public class PainterLine implements IPainter {
 
     @Override
     public void paintMagic(double timestamp, double duration, float magnitudes, float phases) {
-        System.out.println(timestamp + " : " + duration + " : " + magnitudes + " : " + phases);
         timestamp = (int) timestamp;
         if (timestamp % 3 == 0 || timestamp % 3 == 2) {
             lastX += (cwidth / magnitudes) * vorzeichen;
