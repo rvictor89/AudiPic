@@ -3,6 +3,7 @@ package de.victorfx.audipic.controller;
 import de.victorfx.audipic.painter.IPainter;
 import de.victorfx.audipic.painter.PainterCurve;
 import de.victorfx.audipic.painter.PainterLine;
+import de.victorfx.audipic.painter.PainterOval;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
@@ -51,6 +52,7 @@ public class AudiPicController implements Initializable {
 
         painters.add(new PainterLine());
         painters.add(new PainterCurve());
+        painters.add(new PainterOval());
 
         for (int i = 0; i < painters.size(); i++) {
             Canvas canvas = new Canvas();
@@ -75,7 +77,7 @@ public class AudiPicController implements Initializable {
             mediaPlayer = new MediaPlayer(media);
             mediaPlayer.setAudioSpectrumListener(new SpektrumListener());
             mediaPlayer.setAudioSpectrumInterval(1);
-            mediaPlayer.setAudioSpectrumNumBands(2);
+            mediaPlayer.setAudioSpectrumNumBands(3);
             mediaPlayer.setAutoPlay(true);
         }
     }
