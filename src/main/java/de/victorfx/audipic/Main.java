@@ -30,8 +30,8 @@ public class Main extends Application {
         Parent fxplayer = FXMLLoader.load(fxml);
         Scene root = new Scene(fxplayer);
         primaryStage.setScene(root);
-        primaryStage.setMaximized(true);
-        //primaryStage.setFullScreen(true);
+        //primaryStage.setMaximized(true);
+        primaryStage.setFullScreen(true);
         primaryStage.show();
     }
 }

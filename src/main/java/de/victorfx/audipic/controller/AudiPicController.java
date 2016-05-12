@@ -9,12 +9,14 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.media.AudioSpectrumListener;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 
+import java.awt.*;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
@@ -28,14 +30,20 @@ public class AudiPicController implements Initializable {
     public Canvas canvas;
     public FileChooser fc;
     public Pane canvasPane;
+    public VBox settingsBox;
     private MediaPlayer mediaPlayer;
     private GraphicsContext context;
     private double lastX = 0;
     private double lastY = 0;
     private List<IPainter> painters = new ArrayList<>();
+    private GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        int width = device.getDisplayMode().getWidth() - (int) settingsBox.getMinWidth();
+        int height = device.getDisplayMode().getHeight();
+        canvas.setWidth(width);
+        canvas.setHeight(height);
         context = canvas.getGraphicsContext2D();
         context.setFill(Color.WHITE);
         context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -67,7 +75,7 @@ public class AudiPicController implements Initializable {
             mediaPlayer = new MediaPlayer(media);
             mediaPlayer.setAudioSpectrumListener(new SpektrumListener());
             mediaPlayer.setAudioSpectrumInterval(1);
-            mediaPlayer.setAudioSpectrumNumBands(1);
+            mediaPlayer.setAudioSpectrumNumBands(2);
             mediaPlayer.setAutoPlay(true);
         }
     }
