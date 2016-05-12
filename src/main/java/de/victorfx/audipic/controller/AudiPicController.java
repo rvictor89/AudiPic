@@ -18,6 +18,7 @@ import java.util.ResourceBundle;
 public class AudiPicController implements Initializable {
     public Canvas canvas;
     public FileChooser fc;
+    private MediaPlayer mediaPlayer;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -35,10 +36,10 @@ public class AudiPicController implements Initializable {
         if (file != null) {
             String songpath = file.getAbsolutePath().replace("\\", "/");
             Media media = new Media(new File(songpath).toURI().toString());
-            MediaPlayer mediaPlayer = new MediaPlayer(media);
+            mediaPlayer = new MediaPlayer(media);
             mediaPlayer.setAudioSpectrumListener(new SpektrumListener());
-//            mediaPlayer.setAudioSpectrumInterval(1);
-//            mediaPlayer.setAudioSpectrumNumBands(1);
+            mediaPlayer.setAudioSpectrumInterval(1);
+            mediaPlayer.setAudioSpectrumNumBands(1);
             mediaPlayer.setAutoPlay(true);
         }
     }
