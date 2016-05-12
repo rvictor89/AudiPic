@@ -25,31 +25,13 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        ResourceBundle language = ResourceBundle.getBundle("de.victorfx.audipic.language", Locale.getDefault());
         primaryStage.initStyle(StageStyle.UNIFIED);
-        addFavIcons(primaryStage);
-        primaryStage.setResizable(true);
-        primaryStage.setTitle(language.getString("appTitle"));
         URL fxml = getClass().getResource("fxml/audipic.fxml");
-        Parent fxplayer = FXMLLoader.load(fxml, language);
+        Parent fxplayer = FXMLLoader.load(fxml);
         Scene root = new Scene(fxplayer);
         primaryStage.setScene(root);
         primaryStage.setMaximized(true);
-        //primaryStage.setWidth(1280);
-        //primaryStage.setHeight(720);
         //primaryStage.setFullScreen(true);
-        primaryStage.setMinWidth(1024);
-        primaryStage.setMinHeight(768);
         primaryStage.show();
-    }
-
-    private void addFavIcons(Stage primaryStage) {
-        primaryStage.getIcons().add(new Image(this.getClass().getResource("images/logo/FXPlayerLogo_16.png").toString()));
-        primaryStage.getIcons().add(new Image(this.getClass().getResource("images/logo/FXPlayerLogo_32.png").toString()));
-        primaryStage.getIcons().add(new Image(this.getClass().getResource("images/logo/FXPlayerLogo_64.png").toString()));
-        primaryStage.getIcons().add(new Image(this.getClass().getResource("images/logo/FXPlayerLogo_128.png").toString()));
-        primaryStage.getIcons().add(new Image(this.getClass().getResource("images/logo/FXPlayerLogo_256.png").toString()));
-        primaryStage.getIcons().add(new Image(this.getClass().getResource("images/logo/FXPlayerLogo_512.png").toString()));
-        primaryStage.getIcons().add(new Image(this.getClass().getResource("images/logo/FXPlayerLogo_1024.png").toString()));
     }
 }
