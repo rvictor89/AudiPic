@@ -70,4 +70,9 @@ public class PainterCurve implements IPainter {
         context.stroke();
         context.save();
     }
+
+    @Override
+    public void setColor(Color color) {
+
+    }
 }

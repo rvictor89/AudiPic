@@ -11,59 +11,68 @@ public class PainterLine implements IPainter {
 
     private GraphicsContext context;
     private double lastX = 0;
+    private double newX = 0;
     private double lastY = 0;
-    private double vorzeichen = 1;
+    private double newY = 0;
     private double cwidth = 0;
     private double cheight = 0;
+    private Color color = Color.BLACK;
 
     @Override
     public void setGraphicContextForMagic(GraphicsContext context, double cwidth, double cheight) {
         this.context = context;
         this.cheight = cheight;
         this.cwidth = cwidth;
-        context.beginPath();
-        context.setStroke(Color.GREEN);
         context.setLineWidth(10);
-        context.setGlobalBlendMode(BlendMode.EXCLUSION);
+        context.setGlobalBlendMode(BlendMode.SRC_OVER);
         lastX = cwidth / 2;
         lastY = cheight / 2;
-        context.moveTo(lastX, lastY);
+        newX = lastX;
+        newY = lastY;
     }
 
     @Override
     public void paintMagic(double timestamp, double duration, float magnitudes, float phases) {
         timestamp = (int) timestamp;
-        context.setGlobalAlpha((-magnitudes)/100);
+        context.setGlobalAlpha((-magnitudes) / 100);
         if (timestamp % 4 == 0) {
-            lastX += (cwidth / magnitudes)+ timestamp * 10;
-            if (lastX >= cwidth || lastX <= 0) {
-                lastX = cwidth / 2;
-                lastY = cheight / 2;
+            newX += (cwidth / magnitudes);
+            if (newX >= cwidth || newX <= 0) {
+                newX = cwidth / 2;
+                newY = cheight / 2;
             }
         }
         if (timestamp % 4 == 1) {
-            lastY += (cheight / magnitudes)+ timestamp * 10;
-            if (lastY >= cheight || lastY <= 0) {
-                lastX = cwidth / 2;
-                lastY = cheight / 2;
+            newY += (cheight / magnitudes);
+            if (newY >= cheight || newY <= 0) {
+                newX = cwidth / 2;
+                newY = cheight / 2;
             }
         }
         if (timestamp % 4 == 2) {
-            lastX -= (cwidth / magnitudes)+ timestamp * 10;
-            if (lastX >= cwidth || lastX <= 0) {
-                lastX = cwidth / 2;
-                lastY = cheight / 2;
+            newX -= (cwidth / magnitudes);
+            if (newX >= cwidth || newX <= 0) {
+                newX = cwidth / 2;
+                newY = cheight / 2;
             }
         }
         if (timestamp % 4 == 3) {
-            lastY -= (cheight / magnitudes) + timestamp * 10;
-            if (lastY >= cheight || lastY <= 0) {
-                lastX = cwidth / 2;
-                lastY = cheight / 2;
+            newY -= (cheight / magnitudes);
+            if (newY >= cheight || newY <= 0) {
+                newX = cwidth / 2;
+                newY = cheight / 2;
             }
         }
-        context.lineTo(lastX, lastY);
+        context.strokeLine(lastX, lastY, newX, newY);
+        lastX = newX;
+        lastY = newY;
         context.stroke();
         context.save();
+    }
+
+    @Override
+    public void setColor(Color color) {
+        this.color = color;
+        context.setStroke(color);
     }
 }

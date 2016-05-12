@@ -1,6 +1,7 @@
 package de.victorfx.audipic.controller;
 
-import de.victorfx.audipic.painter.*;
+import de.victorfx.audipic.painter.IPainter;
+import de.victorfx.audipic.painter.PainterLineTwo;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
@@ -25,9 +26,9 @@ import java.util.ResourceBundle;
  */
 public class AudiPicController implements Initializable {
     public Canvas canvas;
-    public FileChooser fc;
     public Pane canvasPane;
     public VBox settingsBox;
+    private FileChooser fc;
     private MediaPlayer mediaPlayer;
     private GraphicsContext context;
     private List<IPainter> painters = new ArrayList<>();
@@ -44,18 +45,42 @@ public class AudiPicController implements Initializable {
         context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         context.setFill(Color.BLACK);
 
-        painters.add(new PainterLine());
-        painters.add(new PainterLineTwo());
+        IPainter painter1 = new PainterLineTwo();
+        painters.add(painter1);
+        IPainter painter2 = new PainterLineTwo();
+        painters.add(painter2);
+        IPainter painter3 = new PainterLineTwo();
+        painters.add(painter3);
+        IPainter painter4 = new PainterLineTwo();
+        painters.add(painter4);
+        IPainter painter5 = new PainterLineTwo();
+        painters.add(painter5);
+        IPainter painter6 = new PainterLineTwo();
+        painters.add(painter6);
+        IPainter painter7 = new PainterLineTwo();
+        painters.add(painter7);
+        IPainter painter8 = new PainterLineTwo();
+        painters.add(painter8);
+        //painters.add(new PainterLineTwo());
         //painters.add(new PainterCurve());
        // painters.add(new PainterOval());
 
-        for (int i = 0; i < painters.size(); i++) {
+        for (IPainter painter : painters) {
             Canvas canvas = new Canvas();
             canvas.setHeight(height);
             canvas.setWidth(width);
             canvasPane.getChildren().add(canvas);
-            painters.get(i).setGraphicContextForMagic(canvas.getGraphicsContext2D(), canvas.getWidth(), canvas.getHeight());
+            painter.setGraphicContextForMagic(canvas.getGraphicsContext2D(), canvas.getWidth(), canvas.getHeight());
         }
+
+        painter1.setColor(Color.RED);
+        painter2.setColor(Color.GREEN);
+        painter3.setColor(Color.YELLOW);
+        painter4.setColor(Color.GREY);
+        painter5.setColor(Color.VIOLET);
+        painter6.setColor(Color.BLUE);
+        painter7.setColor(Color.CHOCOLATE);
+        painter8.setColor(Color.ORANGE);
     }
 
     @FXML
