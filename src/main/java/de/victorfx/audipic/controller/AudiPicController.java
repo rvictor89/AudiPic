@@ -2,15 +2,15 @@ package de.victorfx.audipic.controller;
 
 import de.victorfx.audipic.model.SettingsStore;
 import de.victorfx.audipic.painter.IPainter;
-import de.victorfx.audipic.painter.PainterLineTwo;
+import de.victorfx.audipic.painter.MagicPainter;
 import javafx.animation.AnimationTimer;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.WritableImage;
@@ -49,6 +49,7 @@ public class AudiPicController implements Initializable {
     public Button playbtn;
     public Button pausebtn;
     public Label fpsLabel;
+    public ChoiceBox choiceBox;
     private FileChooser fc;
     private MediaPlayer mediaPlayer;
     private GraphicsContext context;
@@ -62,12 +63,15 @@ public class AudiPicController implements Initializable {
         AnimationTimer timer = new FPSCounter();
         timer.start();
 
+        settingsStore = new SettingsStore();
+
+        choiceBox.getItems().addAll(settingsStore.LINES, settingsStore.OVALS, settingsStore.RECTS, settingsStore.ARCS);
+        choiceBox.getSelectionModel().select(0);
         pausebtn.setDisable(true);
         playbtn.setDisable(true);
         inputLinesWidth.disableProperty().bind(checkDynamicLines.selectedProperty());
         inputLinesFactor.disableProperty().bind(checkDynamicLines.selectedProperty());
 
-        settingsStore = new SettingsStore();
         int width = device.getDisplayMode().getWidth() - (int) settingsBox.getMinWidth();
         int height = device.getDisplayMode().getHeight();
         canvas.setWidth(width);
@@ -77,21 +81,21 @@ public class AudiPicController implements Initializable {
         context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         context.setFill(Color.BLACK);
 
-        IPainter painter1 = new PainterLineTwo();
+        IPainter painter1 = new MagicPainter();
         painters.add(painter1);
-        IPainter painter2 = new PainterLineTwo();
+        IPainter painter2 = new MagicPainter();
         painters.add(painter2);
-        IPainter painter3 = new PainterLineTwo();
+        IPainter painter3 = new MagicPainter();
         painters.add(painter3);
-        IPainter painter4 = new PainterLineTwo();
+        IPainter painter4 = new MagicPainter();
         painters.add(painter4);
-        IPainter painter5 = new PainterLineTwo();
+        IPainter painter5 = new MagicPainter();
         painters.add(painter5);
-        IPainter painter6 = new PainterLineTwo();
+        IPainter painter6 = new MagicPainter();
         painters.add(painter6);
-        IPainter painter7 = new PainterLineTwo();
+        IPainter painter7 = new MagicPainter();
         painters.add(painter7);
-        IPainter painter8 = new PainterLineTwo();
+        IPainter painter8 = new MagicPainter();
         painters.add(painter8);
 
         for (int i = 0; i < painters.size(); i++) {
@@ -132,9 +136,10 @@ public class AudiPicController implements Initializable {
             settingsStore.setDynamicLines(checkDynamicLines.isSelected());
             settingsStore.setDiffMultiplikator(inputDiffMultiplikator.getText().isEmpty() ? 10 : Integer.parseInt(inputDiffMultiplikator.getText()));
             settingsStore.setMultiplikatror(inputMultiplikator.getText().isEmpty() ? 20 : Integer.parseInt(inputMultiplikator.getText()));
+            settingsStore.setType(choiceBox.getValue().toString());
             if (!settingsStore.isDynamicLines()) {
                 settingsStore.setLine_width(inputLinesWidth.getText().isEmpty() ? 2 : Integer.parseInt(inputLinesWidth.getText()));
-                settingsStore.setLineFactor(inputLinesFactor.getText().isEmpty() ? 5 : Integer.parseInt(inputLinesFactor.getText()));
+                settingsStore.setLineFactor(inputLinesFactor.getText().isEmpty() ? 1 : Integer.parseInt(inputLinesFactor.getText()));
             }
             for (IPainter painter : painters) {
                 painter.clearCanvas();
@@ -183,6 +188,7 @@ public class AudiPicController implements Initializable {
         inputDiffMultiplikator.setDisable(value);
         inputInterval.setDisable(value);
         checkDynamicLines.setDisable(value);
+        choiceBox.setDisable(value);
     }
 
     /**

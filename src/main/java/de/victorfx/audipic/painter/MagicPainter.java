@@ -4,11 +4,12 @@ import de.victorfx.audipic.model.SettingsStore;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.effect.BlendMode;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.ArcType;
 
 /**
  * @author Ramon Victor Mai 2016.
  */
-public class PainterLineTwo implements IPainter {
+public class MagicPainter implements IPainter {
 
     private int multiplikator;
     private int line_width;
@@ -16,6 +17,7 @@ public class PainterLineTwo implements IPainter {
     public static final BlendMode BLEND_MODE = BlendMode.EXCLUSION;
     private int linefactor;
     private boolean dynamiclines;
+    private String type;
     private SettingsStore settingsStore;
     private GraphicsContext context;
     private double lastX = 0;
@@ -40,6 +42,7 @@ public class PainterLineTwo implements IPainter {
         diffmultiplikator = settingsStore.getDiffMultiplikator();
         linefactor = settingsStore.getLineFactor();
         dynamiclines = settingsStore.isDynamicLines();
+        type = settingsStore.getType();
         context.setLineWidth(line_width);
         context.setGlobalBlendMode(BLEND_MODE);
         lastX = cwidth / 2;
@@ -96,7 +99,18 @@ public class PainterLineTwo implements IPainter {
                 lastDiff = timestamp;
             }
         }
-        context.strokeLine(lastX, lastY, newX, newY);
+        if (type.equals(settingsStore.LINES)) {
+            context.strokeLine(lastX, lastY, newX, newY);
+        }
+        if (type.equals(settingsStore.OVALS)) {
+            context.strokeOval(newX, newY, -magnitudes / linefactor, -magnitudes / linefactor);
+        }
+        if (type.equals(settingsStore.RECTS)) {
+            context.strokeRect(newX, newY, -magnitudes / linefactor, -magnitudes / linefactor);
+        }
+        if (type.equals(settingsStore.ARCS)) {
+            context.strokeArc(newX, newY, -magnitudes / linefactor, -magnitudes / linefactor, 0, Math.random()*360, ArcType.OPEN);
+        }
         lastX = newX;
         lastY = newY;
         context.stroke();
@@ -116,6 +130,7 @@ public class PainterLineTwo implements IPainter {
         diffmultiplikator = settingsStore.getDiffMultiplikator();
         linefactor = settingsStore.getLineFactor();
         dynamiclines = settingsStore.isDynamicLines();
+        type = settingsStore.getType();
     }
 
     @Override
