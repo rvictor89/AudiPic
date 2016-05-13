@@ -10,8 +10,9 @@ import javafx.scene.paint.Color;
 public class PainterLineTwo implements IPainter {
 
     private static final int MULTIPLIKATOR = 20;
-    private static final int LINE_WIDTH = 1;
+    private static final int LINE_WIDTH = 10;
     private static final int DIFFMULTIPLIKATOR = 10;
+    public static final BlendMode BLEND_MODE = BlendMode.EXCLUSION;
     private GraphicsContext context;
     private double lastX = 0;
     private double newX = 0;
@@ -30,7 +31,7 @@ public class PainterLineTwo implements IPainter {
         this.cheight = cheight;
         this.cwidth = cwidth;
         context.setLineWidth(LINE_WIDTH);
-        context.setGlobalBlendMode(BlendMode.SRC_OVER);
+        context.setGlobalBlendMode(BLEND_MODE);
         lastX = cwidth / 2;
         lastY = cheight / 2;
         newX = lastX;
