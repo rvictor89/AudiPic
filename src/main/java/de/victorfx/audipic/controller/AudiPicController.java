@@ -4,7 +4,9 @@ import de.victorfx.audipic.model.SettingsStore;
 import de.victorfx.audipic.painter.IPainter;
 import de.victorfx.audipic.painter.MagicPainter;
 import javafx.animation.AnimationTimer;
+import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
@@ -189,6 +191,11 @@ public class AudiPicController implements Initializable {
         inputInterval.setDisable(value);
         checkDynamicLines.setDisable(value);
         choiceBox.setDisable(value);
+    }
+
+    @FXML
+    private void closeApplication() {
+        Platform.exit();
     }
 
     /**
