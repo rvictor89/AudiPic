@@ -131,6 +131,7 @@ public class AudiPicController implements Initializable {
             Media media = new Media(new File(songpath).toURI().toString());
             mediaPlayer = new MediaPlayer(media);
             mediaPlayer.setAudioSpectrumListener(new SpektrumListener());
+            disableAllInputs(false);
             storeCurrentInputInSettingsStore();
             context.setFill(settingsStore.getBgColor());
             context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
