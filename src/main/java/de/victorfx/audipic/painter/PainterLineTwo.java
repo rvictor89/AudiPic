@@ -1,5 +1,6 @@
 package de.victorfx.audipic.painter;
 
+import de.victorfx.audipic.model.SettingsStore;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.effect.BlendMode;
 import javafx.scene.paint.Color;
@@ -9,12 +10,13 @@ import javafx.scene.paint.Color;
  */
 public class PainterLineTwo implements IPainter {
 
-    private static final int MULTIPLIKATOR = 20;
-    private static final int LINE_WIDTH = 2;
-    private static final int DIFFMULTIPLIKATOR = 10;
+    private int multiplikator;
+    private int line_width;
+    private int diffmultiplikator;
     public static final BlendMode BLEND_MODE = BlendMode.EXCLUSION;
-    public static final int LINEFACTOR = 5;
-    public static final boolean DYNAMICLINES = false;
+    private int linefactor;
+    private boolean dynamiclines;
+    private SettingsStore settingsStore;
     private GraphicsContext context;
     private double lastX = 0;
     private double newX = 0;
@@ -28,11 +30,17 @@ public class PainterLineTwo implements IPainter {
     private int newTime = 0;
 
     @Override
-    public void setGraphicContextForMagic(GraphicsContext context, double cwidth, double cheight) {
+    public void setGraphicContextForMagic(GraphicsContext context, double cwidth, double cheight, SettingsStore settingsStore) {
         this.context = context;
         this.cheight = cheight;
         this.cwidth = cwidth;
-        context.setLineWidth(LINE_WIDTH);
+        this.settingsStore = settingsStore;
+        multiplikator = settingsStore.getMultiplikatror();
+        line_width = settingsStore.getLine_width();
+        diffmultiplikator = settingsStore.getDiffMultiplikator();
+        linefactor = settingsStore.getLineFactor();
+        dynamiclines = settingsStore.isDynamicLines();
+        context.setLineWidth(line_width);
         context.setGlobalBlendMode(BLEND_MODE);
         lastX = cwidth / 2;
         lastY = cheight / 2;
@@ -42,14 +50,14 @@ public class PainterLineTwo implements IPainter {
 
     @Override
     public void paintMagic(double timestamp, double duration, float magnitudes, float phases) {
-        if (DYNAMICLINES) {
-            context.setLineWidth(-magnitudes / LINEFACTOR);
+        if (dynamiclines) {
+            context.setLineWidth(-magnitudes / linefactor);
         }
         newTime = (int) (timestamp * (1 / duration));
-        diff = (int) (timestamp - lastDiff) * DIFFMULTIPLIKATOR;
+        diff = (int) (timestamp - lastDiff) * diffmultiplikator;
         context.setGlobalAlpha((-magnitudes) / 100);
         if (newTime % 4 == 3) {
-            newX += (cwidth / (-magnitudes)) * MULTIPLIKATOR + diff;
+            newX += (cwidth / (-magnitudes)) * multiplikator + diff;
             if (newX >= cwidth || newX <= 0) {
                 newX = cwidth / 2;
                 newY = cheight / 2;
@@ -59,7 +67,7 @@ public class PainterLineTwo implements IPainter {
             }
         }
         if (newTime % 4 == 0) {
-            newY += (cheight / (-magnitudes)) * MULTIPLIKATOR + diff;
+            newY += (cheight / (-magnitudes)) * multiplikator + diff;
             if (newY >= cheight || newY <= 0) {
                 newX = cwidth / 2;
                 newY = cheight / 2;
@@ -69,7 +77,7 @@ public class PainterLineTwo implements IPainter {
             }
         }
         if (newTime % 4 == 1) {
-            newX -= (cwidth / (-magnitudes)) * MULTIPLIKATOR + diff;
+            newX -= (cwidth / (-magnitudes)) * multiplikator + diff;
             if (newX >= cwidth || newX <= 0) {
                 newX = cwidth / 2;
                 newY = cheight / 2;
@@ -79,7 +87,7 @@ public class PainterLineTwo implements IPainter {
             }
         }
         if (newTime % 4 == 2) {
-            newY -= (cheight / (-magnitudes)) * MULTIPLIKATOR + diff;
+            newY -= (cheight / (-magnitudes)) * multiplikator + diff;
             if (newY >= cheight || newY <= 0) {
                 newX = cwidth / 2;
                 newY = cheight / 2;
@@ -99,5 +107,14 @@ public class PainterLineTwo implements IPainter {
     public void setColor(Color color) {
         this.color = color;
         context.setStroke(this.color);
+    }
+
+    @Override
+    public void updateSettings() {
+        multiplikator = settingsStore.getMultiplikatror();
+        line_width = settingsStore.getLine_width();
+        diffmultiplikator = settingsStore.getDiffMultiplikator();
+        linefactor = settingsStore.getLineFactor();
+        dynamiclines = settingsStore.isDynamicLines();
     }
 }

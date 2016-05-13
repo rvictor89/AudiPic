@@ -1,5 +1,6 @@
 package de.victorfx.audipic.painter;
 
+import de.victorfx.audipic.model.SettingsStore;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.effect.BlendMode;
 import javafx.scene.paint.Color;
@@ -19,7 +20,7 @@ public class PainterLine implements IPainter {
     private Color color = Color.BLACK;
 
     @Override
-    public void setGraphicContextForMagic(GraphicsContext context, double cwidth, double cheight) {
+    public void setGraphicContextForMagic(GraphicsContext context, double cwidth, double cheight, SettingsStore settingsStore) {
         this.context = context;
         this.cheight = cheight;
         this.cwidth = cwidth;
@@ -74,5 +75,10 @@ public class PainterLine implements IPainter {
     public void setColor(Color color) {
         this.color = color;
         context.setStroke(color);
+    }
+
+    @Override
+    public void updateSettings() {
+
     }
 }

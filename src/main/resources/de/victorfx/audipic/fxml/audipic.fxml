@@ -2,17 +2,19 @@
 
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<?import javafx.scene.control.Slider?>
-<?import javafx.scene.control.Label?>
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.victorfx.audipic.controller.AudiPicController">
     <center>
         <Pane fx:id="canvasPane" BorderPane.alignment="CENTER">
             <children>
-                <Canvas fx:id="canvas" height="480.0" nodeOrientation="INHERIT" width="640.0"/>
+                <Canvas fx:id="canvas" height="480.0" nodeOrientation="INHERIT" width="640.0" />
             </children>
         </Pane>
     </center>
@@ -20,9 +22,21 @@
         <VBox fx:id="settingsBox" alignment="TOP_CENTER" minWidth="100.0" BorderPane.alignment="CENTER">
             <children>
                 <Button mnemonicParsing="false" onAction="#openAudio" prefHeight="25.0" prefWidth="109.0" text="Audio File" />
-                <Button mnemonicParsing="false" onAction="#playAudio" prefHeight="25.0" prefWidth="109.0" text="Play" />
-                <Button mnemonicParsing="false" onAction="#pauseAudio" prefHeight="25.0" prefWidth="109.0" text="Pause" />
-                <Label fx:id="durationLabel" prefWidth="109.0" prefHeight="25.0" />
+                <Button fx:id="playbtn" mnemonicParsing="false" onAction="#playAudio" prefHeight="25.0" prefWidth="109.0" text="Play" />
+                <Button fx:id="pausebtn" mnemonicParsing="false" onAction="#pauseAudio" prefHeight="25.0" prefWidth="109.0" text="Pause" />
+                <Label fx:id="durationLabel" prefHeight="25.0" prefWidth="109.0" />
+            <Separator />
+            <Label text="Interval:" />
+            <TextField fx:id="inputInterval" prefHeight="25.0" prefWidth="86.0" promptText="[0.1 - 1.0]" />
+            <Label text="Multiplikator:" />
+            <TextField fx:id="inputMultiplikator" prefHeight="25.0" prefWidth="20.0" promptText="[1 - 50]" />
+            <Label text="Zusatzmultiplikator:" />
+            <TextField fx:id="inputDiffMultiplikator" prefHeight="25.0" prefWidth="0.0" promptText="[1 - 50]" />
+            <CheckBox fx:id="checkDynamicLines" mnemonicParsing="false" selected="true" text="Dynamic Lines" />
+            <Label text="Line Width:" />
+            <TextField fx:id="inputLinesWidth" prefHeight="25.0" prefWidth="0.0" promptText="[0 - 50]" />
+            <Label text="Line Factor:" />
+            <TextField fx:id="inputLinesFactor" prefHeight="25.0" prefWidth="0.0" promptText="[0 - 50]" />
             </children>
         </VBox>
     </right>

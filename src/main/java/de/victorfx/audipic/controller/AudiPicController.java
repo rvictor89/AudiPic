@@ -1,5 +1,6 @@
 package de.victorfx.audipic.controller;
 
+import de.victorfx.audipic.model.SettingsStore;
 import de.victorfx.audipic.painter.IPainter;
 import de.victorfx.audipic.painter.PainterLineTwo;
 import javafx.embed.swing.SwingFXUtils;
@@ -7,7 +8,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -31,20 +35,34 @@ import java.util.ResourceBundle;
  * @author Ramon Victor Mai 2016.
  */
 public class AudiPicController implements Initializable {
-    public static final double SPECTRUM_INTERVAL = 0.1;
     public Canvas canvas;
     public Pane canvasPane;
     public VBox settingsBox;
     public Label durationLabel;
-    private String duration;
+    public TextField inputInterval;
+    public TextField inputMultiplikator;
+    public TextField inputDiffMultiplikator;
+    public CheckBox checkDynamicLines;
+    public TextField inputLinesWidth;
+    public TextField inputLinesFactor;
+    public Button playbtn;
+    public Button pausebtn;
     private FileChooser fc;
     private MediaPlayer mediaPlayer;
     private GraphicsContext context;
     private List<IPainter> painters = new ArrayList<>();
     private GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+    private SettingsStore settingsStore;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        pausebtn.setDisable(true);
+        playbtn.setDisable(true);
+        inputLinesWidth.disableProperty().bind(checkDynamicLines.selectedProperty());
+        inputLinesFactor.disableProperty().bind(checkDynamicLines.selectedProperty());
+
+        settingsStore = new SettingsStore();
         int width = device.getDisplayMode().getWidth() - (int) settingsBox.getMinWidth();
         int height = device.getDisplayMode().getHeight();
         canvas.setWidth(width);
@@ -76,7 +94,7 @@ public class AudiPicController implements Initializable {
             canvas.setHeight(height);
             canvas.setWidth(width);
             canvasPane.getChildren().add(canvas);
-            painters.get(painters.size() - 1 - i).setGraphicContextForMagic(canvas.getGraphicsContext2D(), canvas.getWidth(), canvas.getHeight());
+            painters.get(painters.size() - 1 - i).setGraphicContextForMagic(canvas.getGraphicsContext2D(), canvas.getWidth(), canvas.getHeight(), settingsStore);
         }
 
         painter1.setColor(Color.DARKRED);
@@ -105,10 +123,21 @@ public class AudiPicController implements Initializable {
             Media media = new Media(new File(songpath).toURI().toString());
             mediaPlayer = new MediaPlayer(media);
             mediaPlayer.setAudioSpectrumListener(new SpektrumListener());
-            mediaPlayer.setAudioSpectrumInterval(SPECTRUM_INTERVAL);
+            settingsStore.setSpektrum_interval(inputInterval.getText().isEmpty() ? 0.1 : Double.parseDouble(inputInterval.getText()));
+            settingsStore.setDynamicLines(checkDynamicLines.isSelected());
+            settingsStore.setDiffMultiplikator(inputDiffMultiplikator.getText().isEmpty() ? 10 : Integer.parseInt(inputDiffMultiplikator.getText()));
+            settingsStore.setMultiplikatror(inputMultiplikator.getText().isEmpty() ? 20 : Integer.parseInt(inputMultiplikator.getText()));
+            if (!settingsStore.isDynamicLines()) {
+                settingsStore.setLine_width(inputLinesWidth.getText().isEmpty() ? 2 : Integer.parseInt(inputLinesWidth.getText()));
+                settingsStore.setLineFactor(inputLinesFactor.getText().isEmpty() ? 5 : Integer.parseInt(inputLinesFactor.getText()));
+            }
+            painters.forEach(IPainter::updateSettings);
+            mediaPlayer.setAudioSpectrumInterval(settingsStore.getSpektrum_interval());
             mediaPlayer.setAudioSpectrumNumBands(painters.size());
             mediaPlayer.setAudioSpectrumThreshold(-100);
             mediaPlayer.setAutoPlay(true);
+            disableAllInputs(true);
+            pausebtn.setDisable(false);
             mediaPlayer.setOnReady(() -> durationLabel.setText("-" + ((int) mediaPlayer.getTotalDuration().toMinutes() % 60) + ":" + ((int) mediaPlayer.getTotalDuration().toSeconds() % 60) + "min"));
             mediaPlayer.setOnEndOfMedia(() -> {
                 WritableImage image = canvasPane.snapshot(null, null);
@@ -126,11 +155,24 @@ public class AudiPicController implements Initializable {
     @FXML
     private void playAudio() {
         mediaPlayer.play();
+        playbtn.setDisable(true);
+        pausebtn.setDisable(false);
+        disableAllInputs(true);
     }
 
     @FXML
     private void pauseAudio() {
         mediaPlayer.pause();
+        playbtn.setDisable(false);
+        pausebtn.setDisable(true);
+        disableAllInputs(false);
+    }
+
+    private void disableAllInputs(boolean value) {
+        inputMultiplikator.setDisable(value);
+        inputDiffMultiplikator.setDisable(value);
+        inputInterval.setDisable(value);
+        checkDynamicLines.setDisable(value);
     }
 
     /**

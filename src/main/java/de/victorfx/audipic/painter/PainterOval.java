@@ -1,5 +1,6 @@
 package de.victorfx.audipic.painter;
 
+import de.victorfx.audipic.model.SettingsStore;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
@@ -16,7 +17,7 @@ public class PainterOval implements IPainter {
     private double cheight = 0;
 
     @Override
-    public void setGraphicContextForMagic(GraphicsContext context, double cwidth, double cheight) {
+    public void setGraphicContextForMagic(GraphicsContext context, double cwidth, double cheight, SettingsStore settingsStore) {
         this.context = context;
         this.cheight = cheight;
         this.cwidth = cwidth;
@@ -55,6 +56,11 @@ public class PainterOval implements IPainter {
 
     @Override
     public void setColor(Color color) {
+
+    }
+
+    @Override
+    public void updateSettings() {
 
     }
 }
