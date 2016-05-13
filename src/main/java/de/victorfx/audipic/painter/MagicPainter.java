@@ -138,5 +138,12 @@ public class MagicPainter implements IPainter {
 
     @Override
     public void clearCanvas() {
+        context.setGlobalBlendMode(BlendMode.SRC_OVER);
+        context.clearRect(0,0,cwidth,cheight);
+        context.setGlobalBlendMode(BLEND_MODE);
+        lastX = cwidth / 2;
+        lastY = cheight / 2;
+        newX = lastX;
+        newY = lastY;
     }
 }

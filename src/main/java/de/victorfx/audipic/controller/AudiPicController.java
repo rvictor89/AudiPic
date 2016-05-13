@@ -144,8 +144,8 @@ public class AudiPicController implements Initializable {
                 settingsStore.setLineFactor(inputLinesFactor.getText().isEmpty() ? 1 : Integer.parseInt(inputLinesFactor.getText()));
             }
             for (IPainter painter : painters) {
-                painter.clearCanvas();
                 painter.updateSettings();
+                painter.clearCanvas();
             }
             mediaPlayer.setAudioSpectrumInterval(settingsStore.getSpektrum_interval());
             mediaPlayer.setAudioSpectrumNumBands(painters.size());
