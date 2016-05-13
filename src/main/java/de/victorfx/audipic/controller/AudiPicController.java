@@ -63,23 +63,32 @@ public class AudiPicController implements Initializable {
         painters.add(painter8);
         //painters.add(new PainterLineTwo());
         //painters.add(new PainterCurve());
-       // painters.add(new PainterOval());
+        // painters.add(new PainterOval());
 
-        for (IPainter painter : painters) {
+        for (int i = 0; i < painters.size(); i++) {
             Canvas canvas = new Canvas();
             canvas.setHeight(height);
             canvas.setWidth(width);
             canvasPane.getChildren().add(canvas);
-            painter.setGraphicContextForMagic(canvas.getGraphicsContext2D(), canvas.getWidth(), canvas.getHeight());
+            painters.get(painters.size() - 1 - i).setGraphicContextForMagic(canvas.getGraphicsContext2D(), canvas.getWidth(), canvas.getHeight());
         }
 
-        painter1.setColor(Color.RED);
+
+//        for (IPainter painter : painters) {
+//            Canvas canvas = new Canvas();
+//            canvas.setHeight(height);
+//            canvas.setWidth(width);
+//            canvasPane.getChildren().add(canvas);
+//            painter.setGraphicContextForMagic(canvas.getGraphicsContext2D(), canvas.getWidth(), canvas.getHeight());
+//        }
+
+        painter1.setColor(Color.YELLOW);
         painter2.setColor(Color.GREEN);
-        painter3.setColor(Color.YELLOW);
+        painter3.setColor(Color.RED);
         painter4.setColor(Color.GREY);
         painter5.setColor(Color.VIOLET);
         painter6.setColor(Color.BLUE);
-        painter7.setColor(Color.CHOCOLATE);
+        painter7.setColor(Color.BLACK);
         painter8.setColor(Color.ORANGE);
     }
 
@@ -96,8 +105,9 @@ public class AudiPicController implements Initializable {
             Media media = new Media(new File(songpath).toURI().toString());
             mediaPlayer = new MediaPlayer(media);
             mediaPlayer.setAudioSpectrumListener(new SpektrumListener());
-            mediaPlayer.setAudioSpectrumInterval(1);
+            mediaPlayer.setAudioSpectrumInterval(0.1);
             mediaPlayer.setAudioSpectrumNumBands(painters.size());
+            mediaPlayer.setAudioSpectrumThreshold(-100);
             mediaPlayer.setAutoPlay(true);
         }
     }
