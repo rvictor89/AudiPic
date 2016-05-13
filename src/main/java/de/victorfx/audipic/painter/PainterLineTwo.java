@@ -2,6 +2,7 @@ package de.victorfx.audipic.painter;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.effect.BlendMode;
+import javafx.scene.effect.Bloom;
 import javafx.scene.paint.Color;
 
 /**

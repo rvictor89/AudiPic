@@ -82,14 +82,14 @@ public class AudiPicController implements Initializable {
 //            painter.setGraphicContextForMagic(canvas.getGraphicsContext2D(), canvas.getWidth(), canvas.getHeight());
 //        }
 
-        painter1.setColor(Color.YELLOW);
-        painter2.setColor(Color.GREEN);
-        painter3.setColor(Color.RED);
-        painter4.setColor(Color.GREY);
-        painter5.setColor(Color.VIOLET);
-        painter6.setColor(Color.BLUE);
-        painter7.setColor(Color.BLACK);
-        painter8.setColor(Color.ORANGE);
+        painter1.setColor(Color.DARKRED);
+        painter2.setColor(Color.RED);
+        painter3.setColor(Color.ORANGERED);
+        painter4.setColor(Color.ORANGE);
+        painter5.setColor(Color.YELLOW);
+        painter6.setColor(Color.YELLOWGREEN);
+        painter7.setColor(Color.GREEN);
+        painter8.setColor(Color.LIGHTBLUE);
     }
 
     @FXML
