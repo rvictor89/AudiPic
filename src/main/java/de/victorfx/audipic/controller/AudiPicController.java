@@ -2,13 +2,13 @@ package de.victorfx.audipic.controller;
 
 import de.victorfx.audipic.painter.IPainter;
 import de.victorfx.audipic.painter.PainterLineTwo;
-import javafx.event.ActionEvent;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.*;
 import javafx.scene.control.Label;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.AudioSpectrumListener;
@@ -17,8 +17,11 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +31,7 @@ import java.util.ResourceBundle;
  * @author Ramon Victor Mai 2016.
  */
 public class AudiPicController implements Initializable {
+    public static final double SPECTRUM_INTERVAL = 0.1;
     public Canvas canvas;
     public Pane canvasPane;
     public VBox settingsBox;
@@ -87,7 +91,7 @@ public class AudiPicController implements Initializable {
 
     @FXML
     private void openAudio() {
-        if(mediaPlayer != null) {
+        if (mediaPlayer != null) {
             mediaPlayer.dispose();
         }
         fc = new FileChooser();
@@ -101,14 +105,19 @@ public class AudiPicController implements Initializable {
             Media media = new Media(new File(songpath).toURI().toString());
             mediaPlayer = new MediaPlayer(media);
             mediaPlayer.setAudioSpectrumListener(new SpektrumListener());
-            mediaPlayer.setAudioSpectrumInterval(0.1);
+            mediaPlayer.setAudioSpectrumInterval(SPECTRUM_INTERVAL);
             mediaPlayer.setAudioSpectrumNumBands(painters.size());
             mediaPlayer.setAudioSpectrumThreshold(-100);
             mediaPlayer.setAutoPlay(true);
-            mediaPlayer.setOnReady(new Runnable() {
-                @Override
-                public void run() {
-                    durationLabel.setText("-" + ((int)mediaPlayer.getTotalDuration().toMinutes() % 60) + ":" + ((int)mediaPlayer.getTotalDuration().toSeconds() % 60) + "min");
+            mediaPlayer.setOnReady(() -> durationLabel.setText("-" + ((int) mediaPlayer.getTotalDuration().toMinutes() % 60) + ":" + ((int) mediaPlayer.getTotalDuration().toSeconds() % 60) + "min"));
+            mediaPlayer.setOnEndOfMedia(() -> {
+                WritableImage image = canvasPane.snapshot(null, null);
+                BufferedImage bImage = SwingFXUtils.fromFXImage(image, null);
+                try {
+                    //ImageIO.write(bImage, "png", new File("PicTest" + new Date().getTime() + ".png"));
+                    ImageIO.write(bImage, "png", new File(file.getName() + ".png"));
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             });
         }
@@ -133,6 +142,12 @@ public class AudiPicController implements Initializable {
             for (int i = 0; i < painters.size(); i++) {
                 painters.get(i).paintMagic(timestamp, duration, magnitudes[i], phases[i]);
             }
+            int minutes = (int) mediaPlayer.getCurrentTime().toMinutes() % 60;
+            int seconds = (int) mediaPlayer.getCurrentTime().toSeconds() % 60;
+            int minutesDuration = (int) mediaPlayer.getTotalDuration().toMinutes() % 60;
+            int secondsDuration = (int) mediaPlayer.getTotalDuration().toSeconds() % 60;
+            durationLabel.setText(String.format("Zeit: %02d:%02d / %02d:%02d", minutes, seconds, minutesDuration,
+                    secondsDuration));
         }
     }
 }
