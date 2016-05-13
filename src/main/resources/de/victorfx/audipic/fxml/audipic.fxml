@@ -37,6 +37,8 @@
             <TextField fx:id="inputLinesWidth" prefHeight="25.0" prefWidth="0.0" promptText="[0 - 50]" />
             <Label text="Line Factor:" />
             <TextField fx:id="inputLinesFactor" prefHeight="25.0" prefWidth="0.0" promptText="[0 - 50]" />
+            <Separator />
+            <Label fx:id="fpsLabel" text="FPS: " />
             </children>
         </VBox>
     </right>

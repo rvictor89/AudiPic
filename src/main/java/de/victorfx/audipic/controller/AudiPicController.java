@@ -3,6 +3,7 @@ package de.victorfx.audipic.controller;
 import de.victorfx.audipic.model.SettingsStore;
 import de.victorfx.audipic.painter.IPainter;
 import de.victorfx.audipic.painter.PainterLineTwo;
+import javafx.animation.AnimationTimer;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -47,6 +48,7 @@ public class AudiPicController implements Initializable {
     public TextField inputLinesFactor;
     public Button playbtn;
     public Button pausebtn;
+    public Label fpsLabel;
     private FileChooser fc;
     private MediaPlayer mediaPlayer;
     private GraphicsContext context;
@@ -56,6 +58,9 @@ public class AudiPicController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        AnimationTimer timer = new FPSCounter();
+        timer.start();
 
         pausebtn.setDisable(true);
         playbtn.setDisable(true);
@@ -140,6 +145,9 @@ public class AudiPicController implements Initializable {
             pausebtn.setDisable(false);
             mediaPlayer.setOnReady(() -> durationLabel.setText("-" + ((int) mediaPlayer.getTotalDuration().toMinutes() % 60) + ":" + ((int) mediaPlayer.getTotalDuration().toSeconds() % 60) + "min"));
             mediaPlayer.setOnEndOfMedia(() -> {
+                disableAllInputs(false);
+                pausebtn.setDisable(true);
+                playbtn.setDisable(true);
                 WritableImage image = canvasPane.snapshot(null, null);
                 BufferedImage bImage = SwingFXUtils.fromFXImage(image, null);
                 try {
@@ -190,6 +198,28 @@ public class AudiPicController implements Initializable {
             int secondsDuration = (int) mediaPlayer.getTotalDuration().toSeconds() % 60;
             durationLabel.setText(String.format("Zeit: %02d:%02d / %02d:%02d", minutes, seconds, minutesDuration,
                     secondsDuration));
+        }
+    }
+
+    /**
+     * Intern AnimationTimer for computing the frames per second rate.
+     */
+    private class FPSCounter extends AnimationTimer {
+
+        long oldNowTime = 0;
+        long currentFramerate = 0;
+        long tmpTime = 0;
+
+        @Override
+        public void handle(long now) {
+            long elapsedTime = now - oldNowTime;
+            long tmpElapsedTime = now - tmpTime;
+            currentFramerate = 1_000_000_000 / elapsedTime;
+            if (tmpElapsedTime >= 1_000_000_000) {
+                fpsLabel.setText("FPS: " + String.valueOf(currentFramerate));
+                tmpTime = now;
+            }
+            oldNowTime = now;
         }
     }
 }
