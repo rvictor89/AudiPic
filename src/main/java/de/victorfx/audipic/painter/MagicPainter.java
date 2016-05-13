@@ -11,10 +11,10 @@ import javafx.scene.shape.ArcType;
  */
 public class MagicPainter implements IPainter {
 
+    private static final BlendMode BLEND_MODE = BlendMode.EXCLUSION;
     private int multiplikator;
     private int line_width;
     private int diffmultiplikator;
-    public static final BlendMode BLEND_MODE = BlendMode.EXCLUSION;
     private int linefactor;
     private boolean dynamiclines;
     private String type;
@@ -26,10 +26,7 @@ public class MagicPainter implements IPainter {
     private double newY = 0;
     private double cwidth = 0;
     private double cheight = 0;
-    private Color color = Color.BLACK;
     private double lastDiff = 0;
-    private int diff = 0;
-    private int newTime = 0;
 
     @Override
     public void setGraphicContextForMagic(GraphicsContext context, double cwidth, double cheight, SettingsStore settingsStore) {
@@ -56,8 +53,8 @@ public class MagicPainter implements IPainter {
         if (dynamiclines) {
             context.setLineWidth(-magnitudes / linefactor);
         }
-        newTime = (int) (timestamp * (1 / duration));
-        diff = (int) (timestamp - lastDiff) * diffmultiplikator;
+        int newTime = (int) (timestamp * (1 / duration));
+        int diff = (int) (timestamp - lastDiff) * diffmultiplikator;
         context.setGlobalAlpha((-magnitudes) / 100);
         if (newTime % 4 == 3) {
             newX += (cwidth / (-magnitudes)) * multiplikator + diff;
@@ -99,19 +96,19 @@ public class MagicPainter implements IPainter {
                 lastDiff = timestamp;
             }
         }
-        if (type.equals(settingsStore.LINES)) {
+        if (type.equals(SettingsStore.LINES)) {
             context.strokeLine(lastX, lastY, newX, newY);
         }
-        if (type.equals(settingsStore.OVALS)) {
+        if (type.equals(SettingsStore.OVALS)) {
             context.strokeOval(newX, newY, -magnitudes / linefactor, -magnitudes / linefactor);
         }
-        if (type.equals(settingsStore.RECTS)) {
+        if (type.equals(SettingsStore.RECTS)) {
             context.strokeRect(newX, newY, -magnitudes / linefactor, -magnitudes / linefactor);
         }
-        if (type.equals(settingsStore.ARCS)) {
-            context.strokeArc(newX, newY, -magnitudes / linefactor, -magnitudes / linefactor, 0, -magnitudes*(360/100), ArcType.OPEN);
+        if (type.equals(SettingsStore.ARCS)) {
+            context.strokeArc(newX, newY, -magnitudes / linefactor, -magnitudes / linefactor, 0, -magnitudes * (360 / 100), ArcType.OPEN);
         }
-        if (type.equals(settingsStore.TEXTS)) {
+        if (type.equals(SettingsStore.TEXTS)) {
             context.strokeText("HackARThon2016", newX, newY, -magnitudes);
         }
         lastX = newX;
@@ -122,8 +119,7 @@ public class MagicPainter implements IPainter {
 
     @Override
     public void setColor(Color color) {
-        this.color = color;
-        context.setStroke(this.color);
+        context.setStroke(color);
     }
 
     @Override
@@ -139,7 +135,7 @@ public class MagicPainter implements IPainter {
     @Override
     public void clearCanvas() {
         context.setGlobalBlendMode(BlendMode.SRC_OVER);
-        context.clearRect(0,0,cwidth,cheight);
+        context.clearRect(0, 0, cwidth, cheight);
         context.setGlobalBlendMode(BLEND_MODE);
         lastX = cwidth / 2;
         lastY = cheight / 2;
