@@ -48,7 +48,7 @@ public class PainterOval implements IPainter {
                 vorzeichen = -1;
             }
         }
-        context.fillOval(lastX, lastY, 20, 20);
+        context.fillOval(lastX, lastY, -magnitudes/2, -magnitudes/2);
         context.stroke();
         context.save();
     }

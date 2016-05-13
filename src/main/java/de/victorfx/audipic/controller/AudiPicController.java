@@ -2,10 +2,13 @@ package de.victorfx.audipic.controller;
 
 import de.victorfx.audipic.painter.IPainter;
 import de.victorfx.audipic.painter.PainterLineTwo;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.*;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.AudioSpectrumListener;
@@ -28,6 +31,8 @@ public class AudiPicController implements Initializable {
     public Canvas canvas;
     public Pane canvasPane;
     public VBox settingsBox;
+    public Label durationLabel;
+    private String duration;
     private FileChooser fc;
     private MediaPlayer mediaPlayer;
     private GraphicsContext context;
@@ -94,6 +99,9 @@ public class AudiPicController implements Initializable {
 
     @FXML
     private void openAudio() {
+        if(mediaPlayer != null) {
+            mediaPlayer.dispose();
+        }
         fc = new FileChooser();
         fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("MP3", "*.mp3"));
         fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("WAV", "*.wav"));
@@ -109,7 +117,23 @@ public class AudiPicController implements Initializable {
             mediaPlayer.setAudioSpectrumNumBands(painters.size());
             mediaPlayer.setAudioSpectrumThreshold(-100);
             mediaPlayer.setAutoPlay(true);
+            mediaPlayer.setOnReady(new Runnable() {
+                @Override
+                public void run() {
+                    durationLabel.setText("-" + ((int)mediaPlayer.getTotalDuration().toMinutes() % 60) + ":" + ((int)mediaPlayer.getTotalDuration().toSeconds() % 60) + "min");
+                }
+            });
         }
+    }
+
+    @FXML
+    private void playAudio() {
+        mediaPlayer.play();
+    }
+
+    @FXML
+    private void pauseAudio() {
+        mediaPlayer.pause();
     }
 
     /**

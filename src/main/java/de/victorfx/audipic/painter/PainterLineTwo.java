@@ -11,7 +11,7 @@ import javafx.scene.paint.Color;
 public class PainterLineTwo implements IPainter {
 
     private static final int MULTIPLIKATOR = 20;
-    private static final int LINE_WIDTH = 10;
+    private static final int LINE_WIDTH = 2;
     private static final int DIFFMULTIPLIKATOR = 10;
     public static final BlendMode BLEND_MODE = BlendMode.EXCLUSION;
     private GraphicsContext context;
