@@ -6,13 +6,12 @@ import de.victorfx.audipic.painter.MagicPainter;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.*;
 import javafx.scene.control.Button;
+import javafx.scene.control.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.WritableImage;
@@ -68,7 +67,7 @@ public class AudiPicController implements Initializable {
 
         settingsStore = new SettingsStore();
 
-        choiceBox.getItems().addAll(settingsStore.LINES, settingsStore.OVALS, settingsStore.RECTS, settingsStore.ARCS, settingsStore.TEXTS);
+        choiceBox.getItems().addAll(SettingsStore.LINES, SettingsStore.OVALS, SettingsStore.RECTS, SettingsStore.ARCS, SettingsStore.TEXTS);
         choiceBox.getSelectionModel().select(0);
         pausebtn.setDisable(true);
         playbtn.setDisable(true);
@@ -80,9 +79,6 @@ public class AudiPicController implements Initializable {
         canvas.setWidth(width);
         canvas.setHeight(height);
         context = canvas.getGraphicsContext2D();
-//        context.setFill(Color.WHITE);
-//        context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-//        context.setFill(Color.BLACK);
 
         IPainter painter1 = new MagicPainter();
         painters.add(painter1);
@@ -135,18 +131,9 @@ public class AudiPicController implements Initializable {
             Media media = new Media(new File(songpath).toURI().toString());
             mediaPlayer = new MediaPlayer(media);
             mediaPlayer.setAudioSpectrumListener(new SpektrumListener());
-            settingsStore.setBgColor(colorPickerBg.getValue());
+            storeCurrentInputInSettingsStore();
             context.setFill(settingsStore.getBgColor());
             context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-            settingsStore.setSpektrum_interval(inputInterval.getText().isEmpty() ? 0.1 : Double.parseDouble(inputInterval.getText()));
-            settingsStore.setDynamicLines(checkDynamicLines.isSelected());
-            settingsStore.setDiffMultiplikator(inputDiffMultiplikator.getText().isEmpty() ? 10 : Integer.parseInt(inputDiffMultiplikator.getText()));
-            settingsStore.setMultiplikatror(inputMultiplikator.getText().isEmpty() ? 20 : Integer.parseInt(inputMultiplikator.getText()));
-            settingsStore.setType(choiceBox.getValue().toString());
-            if (!settingsStore.isDynamicLines()) {
-                settingsStore.setLine_width(inputLinesWidth.getText().isEmpty() ? 2 : Integer.parseInt(inputLinesWidth.getText()));
-                settingsStore.setLineFactor(inputLinesFactor.getText().isEmpty() ? 1 : Integer.parseInt(inputLinesFactor.getText()));
-            }
             for (IPainter painter : painters) {
                 painter.updateSettings();
                 painter.clearCanvas();
@@ -170,6 +157,19 @@ public class AudiPicController implements Initializable {
                     e.printStackTrace();
                 }
             });
+        }
+    }
+
+    private void storeCurrentInputInSettingsStore() {
+        settingsStore.setBgColor(colorPickerBg.getValue());
+        settingsStore.setSpektrum_interval(inputInterval.getText().isEmpty() ? 0.1 : Double.parseDouble(inputInterval.getText()));
+        settingsStore.setDynamicLines(checkDynamicLines.isSelected());
+        settingsStore.setDiffMultiplikator(inputDiffMultiplikator.getText().isEmpty() ? 10 : Integer.parseInt(inputDiffMultiplikator.getText()));
+        settingsStore.setMultiplikatror(inputMultiplikator.getText().isEmpty() ? 20 : Integer.parseInt(inputMultiplikator.getText()));
+        settingsStore.setType(choiceBox.getValue().toString());
+        if (!settingsStore.isDynamicLines()) {
+            settingsStore.setLine_width(inputLinesWidth.getText().isEmpty() ? 2 : Integer.parseInt(inputLinesWidth.getText()));
+            settingsStore.setLineFactor(inputLinesFactor.getText().isEmpty() ? 1 : Integer.parseInt(inputLinesFactor.getText()));
         }
     }
 
