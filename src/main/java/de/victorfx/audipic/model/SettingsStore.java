@@ -1,5 +1,7 @@
 package de.victorfx.audipic.model;
 
+import javafx.scene.paint.Color;
+
 /**
  * @author Ramon Victor Mai 2016.
  */
@@ -17,6 +19,16 @@ public class SettingsStore {
     private int diffMultiplikator = 10;
     private boolean dynamicLines = true;
     private String type = "Lines";
+
+    public Color getBgColor() {
+        return bgColor;
+    }
+
+    public void setBgColor(Color bgColor) {
+        this.bgColor = bgColor;
+    }
+
+    private Color bgColor = Color.WHITE;
 
     public String getType() {
         return type;

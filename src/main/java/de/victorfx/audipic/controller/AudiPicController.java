@@ -52,6 +52,7 @@ public class AudiPicController implements Initializable {
     public Button pausebtn;
     public Label fpsLabel;
     public ChoiceBox choiceBox;
+    public ColorPicker colorPickerBg;
     private FileChooser fc;
     private MediaPlayer mediaPlayer;
     private GraphicsContext context;
@@ -79,9 +80,9 @@ public class AudiPicController implements Initializable {
         canvas.setWidth(width);
         canvas.setHeight(height);
         context = canvas.getGraphicsContext2D();
-        context.setFill(Color.WHITE);
-        context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        context.setFill(Color.BLACK);
+//        context.setFill(Color.WHITE);
+//        context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+//        context.setFill(Color.BLACK);
 
         IPainter painter1 = new MagicPainter();
         painters.add(painter1);
@@ -134,6 +135,9 @@ public class AudiPicController implements Initializable {
             Media media = new Media(new File(songpath).toURI().toString());
             mediaPlayer = new MediaPlayer(media);
             mediaPlayer.setAudioSpectrumListener(new SpektrumListener());
+            settingsStore.setBgColor(colorPickerBg.getValue());
+            context.setFill(settingsStore.getBgColor());
+            context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
             settingsStore.setSpektrum_interval(inputInterval.getText().isEmpty() ? 0.1 : Double.parseDouble(inputInterval.getText()));
             settingsStore.setDynamicLines(checkDynamicLines.isSelected());
             settingsStore.setDiffMultiplikator(inputDiffMultiplikator.getText().isEmpty() ? 10 : Integer.parseInt(inputDiffMultiplikator.getText()));
