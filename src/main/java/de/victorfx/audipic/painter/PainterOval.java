@@ -63,4 +63,9 @@ public class PainterOval implements IPainter {
     public void updateSettings() {
 
     }
+
+    @Override
+    public void clearCanvas() {
+
+    }
 }

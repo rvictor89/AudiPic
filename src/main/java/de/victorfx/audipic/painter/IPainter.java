@@ -15,4 +15,6 @@ public interface IPainter {
     void setColor(Color color);
 
     void updateSettings();
+
+    void clearCanvas();
 }

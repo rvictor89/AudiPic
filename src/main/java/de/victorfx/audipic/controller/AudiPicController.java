@@ -136,7 +136,10 @@ public class AudiPicController implements Initializable {
                 settingsStore.setLine_width(inputLinesWidth.getText().isEmpty() ? 2 : Integer.parseInt(inputLinesWidth.getText()));
                 settingsStore.setLineFactor(inputLinesFactor.getText().isEmpty() ? 5 : Integer.parseInt(inputLinesFactor.getText()));
             }
-            painters.forEach(IPainter::updateSettings);
+            for (IPainter painter : painters) {
+                painter.clearCanvas();
+                painter.updateSettings();
+            }
             mediaPlayer.setAudioSpectrumInterval(settingsStore.getSpektrum_interval());
             mediaPlayer.setAudioSpectrumNumBands(painters.size());
             mediaPlayer.setAudioSpectrumThreshold(-100);
@@ -151,7 +154,6 @@ public class AudiPicController implements Initializable {
                 WritableImage image = canvasPane.snapshot(null, null);
                 BufferedImage bImage = SwingFXUtils.fromFXImage(image, null);
                 try {
-                    //ImageIO.write(bImage, "png", new File("PicTest" + new Date().getTime() + ".png"));
                     ImageIO.write(bImage, "png", new File(file.getName() + ".png"));
                 } catch (IOException e) {
                     e.printStackTrace();

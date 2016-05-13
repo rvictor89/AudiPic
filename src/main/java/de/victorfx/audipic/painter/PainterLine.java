@@ -81,4 +81,9 @@ public class PainterLine implements IPainter {
     public void updateSettings() {
 
     }
+
+    @Override
+    public void clearCanvas() {
+
+    }
 }

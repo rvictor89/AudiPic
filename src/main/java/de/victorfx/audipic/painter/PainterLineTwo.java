@@ -117,4 +117,8 @@ public class PainterLineTwo implements IPainter {
         linefactor = settingsStore.getLineFactor();
         dynamiclines = settingsStore.isDynamicLines();
     }
+
+    @Override
+    public void clearCanvas() {
+    }
 }
