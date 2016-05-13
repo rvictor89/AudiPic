@@ -66,9 +66,6 @@ public class AudiPicController implements Initializable {
         painters.add(painter7);
         IPainter painter8 = new PainterLineTwo();
         painters.add(painter8);
-        //painters.add(new PainterLineTwo());
-        //painters.add(new PainterCurve());
-        // painters.add(new PainterOval());
 
         for (int i = 0; i < painters.size(); i++) {
             Canvas canvas = new Canvas();
@@ -77,15 +74,6 @@ public class AudiPicController implements Initializable {
             canvasPane.getChildren().add(canvas);
             painters.get(painters.size() - 1 - i).setGraphicContextForMagic(canvas.getGraphicsContext2D(), canvas.getWidth(), canvas.getHeight());
         }
-
-
-//        for (IPainter painter : painters) {
-//            Canvas canvas = new Canvas();
-//            canvas.setHeight(height);
-//            canvas.setWidth(width);
-//            canvasPane.getChildren().add(canvas);
-//            painter.setGraphicContextForMagic(canvas.getGraphicsContext2D(), canvas.getWidth(), canvas.getHeight());
-//        }
 
         painter1.setColor(Color.DARKRED);
         painter2.setColor(Color.RED);

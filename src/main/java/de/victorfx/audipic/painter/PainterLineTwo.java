@@ -3,6 +3,8 @@ package de.victorfx.audipic.painter;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.effect.BlendMode;
 import javafx.scene.effect.Bloom;
+import javafx.scene.effect.BlurType;
+import javafx.scene.effect.BoxBlur;
 import javafx.scene.paint.Color;
 
 /**
@@ -41,7 +43,7 @@ public class PainterLineTwo implements IPainter {
 
     @Override
     public void paintMagic(double timestamp, double duration, float magnitudes, float phases) {
-        //context.setLineWidth(-magnitudes/2);
+        context.setLineWidth(-magnitudes/5);
         newTime = (int) (timestamp * (1 / duration));
         diff = (int) (timestamp - lastDiff) * DIFFMULTIPLIKATOR;
         context.setGlobalAlpha((-magnitudes) / 100);
