@@ -109,7 +109,7 @@ public class MagicPainter implements IPainter {
             context.strokeRect(newX, newY, -magnitudes / linefactor, -magnitudes / linefactor);
         }
         if (type.equals(settingsStore.ARCS)) {
-            context.strokeArc(newX, newY, -magnitudes / linefactor, -magnitudes / linefactor, 0, Math.random()*360, ArcType.OPEN);
+            context.strokeArc(newX, newY, -magnitudes / linefactor, -magnitudes / linefactor, 0, -magnitudes*(360/100), ArcType.OPEN);
         }
         if (type.equals(settingsStore.TEXTS)) {
             context.strokeText("HackARThon2016", newX, newY, -magnitudes);
