@@ -67,7 +67,7 @@ public class AudiPicController implements Initializable {
 
         settingsStore = new SettingsStore();
 
-        choiceBox.getItems().addAll(settingsStore.LINES, settingsStore.OVALS, settingsStore.RECTS, settingsStore.ARCS);
+        choiceBox.getItems().addAll(settingsStore.LINES, settingsStore.OVALS, settingsStore.RECTS, settingsStore.ARCS, settingsStore.TEXTS);
         choiceBox.getSelectionModel().select(0);
         pausebtn.setDisable(true);
         playbtn.setDisable(true);

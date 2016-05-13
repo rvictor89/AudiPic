@@ -8,6 +8,7 @@ public class SettingsStore {
     public static final String OVALS = "Ovals";
     public static final String RECTS = "Rects";
     public static final String ARCS = "Arcs";
+    public static final String TEXTS = "Texts";
 
     private double spektrum_interval = 0.1;
     private int multiplikatror = 20;

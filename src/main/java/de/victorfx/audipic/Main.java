@@ -10,9 +10,7 @@ import javafx.stage.StageStyle;
 import java.net.URL;
 
 /**
- * Created by Ramon Victor on 17.10.2015.
- * <p>
- * Main class. Sets the primaryStage and loads the scenes.
+ * @author Ramon Victor Mai 2016.
  */
 public class Main extends Application {
 
