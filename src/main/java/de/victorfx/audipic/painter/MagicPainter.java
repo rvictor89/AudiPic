@@ -126,6 +126,7 @@ public class MagicPainter implements IPainter {
     public void updateSettings() {
         multiplikator = settingsStore.getMultiplikatror();
         line_width = settingsStore.getLine_width();
+        context.setLineWidth(line_width);
         diffmultiplikator = settingsStore.getDiffMultiplikator();
         linefactor = settingsStore.getLineFactor();
         dynamiclines = settingsStore.isDynamicLines();
