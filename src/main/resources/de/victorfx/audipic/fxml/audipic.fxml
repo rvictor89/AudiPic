@@ -70,7 +70,7 @@
                                 <Insets bottom="5.0" top="5.0"/>
                             </VBox.margin>
                         </Label>
-                        <TextField fx:id="inputInterval" prefHeight="25.0" prefWidth="86.0" promptText="[0.1 - 1.0]">
+                        <TextField fx:id="inputInterval" prefHeight="25.0" prefWidth="86.0" promptText="Default: 0.1">
                             <VBox.margin>
                                 <Insets bottom="5.0" top="5.0"/>
                             </VBox.margin>
@@ -80,7 +80,8 @@
                                 <Insets bottom="5.0" top="5.0"/>
                             </VBox.margin>
                         </Label>
-                        <TextField fx:id="inputMultiplikator" prefHeight="25.0" prefWidth="20.0" promptText="[1 - 50]">
+                        <TextField fx:id="inputMultiplikator" prefHeight="25.0" prefWidth="20.0"
+                                   promptText="Default: 20">
                             <VBox.margin>
                                 <Insets bottom="5.0" top="5.0"/>
                             </VBox.margin>
@@ -91,7 +92,7 @@
                             </VBox.margin>
                         </Label>
                         <TextField fx:id="inputDiffMultiplikator" prefHeight="25.0" prefWidth="0.0"
-                                   promptText="[1 - 50]">
+                                   promptText="Default: 10">
                             <VBox.margin>
                                 <Insets bottom="5.0" top="5.0"/>
                             </VBox.margin>
@@ -107,7 +108,7 @@
                                 <Insets bottom="5.0" top="5.0"/>
                             </VBox.margin>
                         </Label>
-                        <TextField fx:id="inputLinesWidth" prefHeight="25.0" prefWidth="0.0" promptText="[0 - 50]">
+                        <TextField fx:id="inputLinesWidth" prefHeight="25.0" prefWidth="0.0" promptText="Default: 2">
                             <VBox.margin>
                                 <Insets bottom="5.0" top="5.0"/>
                             </VBox.margin>
@@ -117,7 +118,7 @@
                                 <Insets bottom="5.0" top="5.0"/>
                             </VBox.margin>
                         </Label>
-                        <TextField fx:id="inputLinesFactor" prefHeight="25.0" prefWidth="0.0" promptText="[0 - 50]">
+                        <TextField fx:id="inputLinesFactor" prefHeight="25.0" prefWidth="0.0" promptText="Default: 1">
                             <VBox.margin>
                                 <Insets bottom="5.0" top="5.0"/>
                             </VBox.margin>
