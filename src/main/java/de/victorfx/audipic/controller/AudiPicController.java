@@ -37,25 +37,41 @@ import java.util.ResourceBundle;
  * @author Ramon Victor Mai 2016.
  */
 public class AudiPicController implements Initializable {
-    public Canvas canvas;
-    public Pane canvasPane;
-    public VBox settingsBox;
-    public Label durationLabel;
-    public TextField inputInterval;
-    public TextField inputMultiplikator;
-    public TextField inputDiffMultiplikator;
-    public CheckBox checkDynamicLines;
-    public TextField inputLinesWidth;
-    public TextField inputLinesFactor;
-    public Button playbtn;
-    public Button pausebtn;
-    public Label fpsLabel;
-    public ChoiceBox choiceBox;
-    public ColorPicker colorPickerBg;
+    @FXML
+    private Canvas canvas;
+    @FXML
+    private Pane canvasPane;
+    @FXML
+    private VBox settingsBox;
+    @FXML
+    private Label durationLabel;
+    @FXML
+    private TextField inputInterval;
+    @FXML
+    private TextField inputMultiplikator;
+    @FXML
+    private TextField inputDiffMultiplikator;
+    @FXML
+    private CheckBox checkDynamicLines;
+    @FXML
+    private TextField inputLinesWidth;
+    @FXML
+    private TextField inputLinesFactor;
+    @FXML
+    private Button playbtn;
+    @FXML
+    private Button pausebtn;
+    @FXML
+    private Label fpsLabel;
+    @FXML
+    private ChoiceBox choiceBox;
+    @FXML
+    private ColorPicker colorPickerBg;
     private FileChooser fc;
     private MediaPlayer mediaPlayer;
     private GraphicsContext context;
     private List<IPainter> painters = new ArrayList<>();
+    private List<Color> colorList;
     private GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
     private SettingsStore settingsStore;
 
@@ -80,22 +96,9 @@ public class AudiPicController implements Initializable {
         canvas.setHeight(height);
         context = canvas.getGraphicsContext2D();
 
-        IPainter painter1 = new MagicPainter();
-        painters.add(painter1);
-        IPainter painter2 = new MagicPainter();
-        painters.add(painter2);
-        IPainter painter3 = new MagicPainter();
-        painters.add(painter3);
-        IPainter painter4 = new MagicPainter();
-        painters.add(painter4);
-        IPainter painter5 = new MagicPainter();
-        painters.add(painter5);
-        IPainter painter6 = new MagicPainter();
-        painters.add(painter6);
-        IPainter painter7 = new MagicPainter();
-        painters.add(painter7);
-        IPainter painter8 = new MagicPainter();
-        painters.add(painter8);
+        for (int i = 0; i < 8; i++) {
+            painters.add(new MagicPainter());
+        }
 
         for (int i = 0; i < painters.size(); i++) {
             Canvas canvas = new Canvas();
@@ -105,14 +108,11 @@ public class AudiPicController implements Initializable {
             painters.get(painters.size() - 1 - i).setGraphicContextForMagic(canvas.getGraphicsContext2D(), canvas.getWidth(), canvas.getHeight(), settingsStore);
         }
 
-        painter1.setColor(Color.DARKRED);
-        painter2.setColor(Color.RED);
-        painter3.setColor(Color.ORANGERED);
-        painter4.setColor(Color.ORANGE);
-        painter5.setColor(Color.YELLOW);
-        painter6.setColor(Color.YELLOWGREEN);
-        painter7.setColor(Color.GREEN);
-        painter8.setColor(Color.LIGHTBLUE);
+        colorList = getColorForPainter(painters.size());
+
+        for (int i = 0; i < painters.size(); i++) {
+            painters.get(i).setColor(colorList.get(i));
+        }
     }
 
     @FXML
@@ -196,6 +196,44 @@ public class AudiPicController implements Initializable {
         inputInterval.setDisable(value);
         checkDynamicLines.setDisable(value);
         choiceBox.setDisable(value);
+    }
+
+    private List<Color> getColorForPainter(int size) {
+        List<Color> colors = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            int painterValue = (765 / size) * (i + 1);
+            double red = 0;
+            double green = 0;
+            double blue = 0;
+            int tmp = 0;
+
+            if ((painterValue / 510) >= 1) {
+                tmp = painterValue % 510;
+                if (tmp == 0) {
+                    green = 255;
+                } else {
+                    blue = tmp;
+                    green = 255 - tmp;
+                }
+            } else if ((painterValue / 255) >= 1) {
+                tmp = painterValue % 255;
+                if (tmp == 0) {
+                    red = 255;
+                } else {
+                    green = tmp;
+                    red = 255 - tmp;
+                }
+            } else {
+                red = painterValue;
+            }
+
+            red = red / 255;
+            green = green / 255;
+            blue = blue / 255;
+
+            colors.add(new Color(red, green, blue, 1.0));
+        }
+        return colors;
     }
 
     @FXML
