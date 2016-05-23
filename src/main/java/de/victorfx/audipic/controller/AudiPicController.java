@@ -196,6 +196,15 @@ public class AudiPicController implements Initializable {
         inputInterval.setDisable(value);
         checkDynamicLines.setDisable(value);
         choiceBox.setDisable(value);
+        if (value) {
+            inputLinesWidth.disableProperty().unbind();
+            inputLinesWidth.setDisable(value);
+            inputLinesFactor.disableProperty().unbind();
+            inputLinesFactor.setDisable(value);
+        } else {
+            inputLinesWidth.disableProperty().bind(checkDynamicLines.selectedProperty());
+            inputLinesFactor.disableProperty().bind(checkDynamicLines.selectedProperty());
+        }
     }
 
     private List<Color> getColorForPainter(int size) {
