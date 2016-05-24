@@ -44,6 +44,12 @@
                                 <Insets bottom="5.0" top="5.0"/>
                             </VBox.margin>
                         </Label>
+                        <Button mnemonicParsing="false" onAction="#setFullscreen" prefHeight="25.0"
+                                prefWidth="109.0" text="Vollbild">
+                            <VBox.margin>
+                                <Insets bottom="5.0" top="5.0"/>
+                            </VBox.margin>
+                        </Button>
                         <Separator/>
                         <Label text="Artstyle:">
                             <VBox.margin>
@@ -60,7 +66,8 @@
                                 <Insets bottom="5.0" top="5.0"/>
                             </VBox.margin>
                         </Label>
-                        <ColorPicker fx:id="colorPickerBg" prefHeight="45.0" prefWidth="139.0" styleClass="button">
+                        <ColorPicker fx:id="colorPickerBg" prefHeight="45.0" minHeight="45.0" prefWidth="139.0"
+                                     styleClass="button">
                             <VBox.margin>
                                 <Insets bottom="5.0" top="5.0"/>
                             </VBox.margin>

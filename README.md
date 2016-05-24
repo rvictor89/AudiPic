@@ -1,4 +1,8 @@
-#AudiPic
+#AudiPic v.1.0
 
-JavaFX Application for creating pictures by using music.
-AudiPic won the HackARThon 2016 at the TH Köln in Gummersbach.
+AudiPic wurde im Rahmen des HackARThons (1.Platz) an der TH Köln Campus Gummersbach innerhalb von nur wenigen Stunden entwickelt
+und ermöglicht es, anhand einer Audio-Datei ein Bild Live zu erzeugen. Die erzeugten Bilder sind bei den gleichen Einstellungen
+immer identisch, da beim Erzeugen keine Zufallsalgorithmen verwendet wurden. Die genutzten Parameter sind unter anderem
+die verschiedenen Frequenzbereiche (Bänder) sowie deren Ausschlag in Db.
+
+AudiPic benötigt mindestens Java 8!

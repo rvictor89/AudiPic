@@ -22,6 +22,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -248,6 +249,12 @@ public class AudiPicController implements Initializable {
     @FXML
     private void closeApplication() {
         Platform.exit();
+    }
+
+    @FXML
+    private void setFullscreen() {
+        Stage tmp = (Stage) canvasPane.getScene().getWindow();
+        tmp.setFullScreen(true);
     }
 
     /**
