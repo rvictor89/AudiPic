@@ -7,7 +7,7 @@
     <groupId>de.victorfx</groupId>
     <artifactId>audipic</artifactId>
     <packaging>jar</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
 
     <dependencies>
         <dependency>
@@ -34,7 +34,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.3</version>
+                <version>3.5.1</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
@@ -43,7 +43,7 @@
             <plugin>
                 <groupId>com.zenjava</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
-                <version>8.1.4</version>
+                <version>8.4.0</version>
                 <configuration>
                     <mainClass>de.victorfx.audipic.Main</mainClass>
                     <appName>AudiPic</appName>
@@ -72,7 +72,7 @@
     </build>
 
     <name>AudiPic</name>
-    <description>HackARThon2016 TH Köln</description>
+    <description>Create Pictures with Audio</description>
     <url>https://github.com/rvictor89/audipic</url>
     <inceptionYear>2016</inceptionYear>
     <licenses>
@@ -86,8 +86,11 @@
     </organization>
     <developers>
         <developer>
-            <name>Ramon Victor</name>
+            <name>Ramon Victor, B.Sc.</name>
             <url>www.rvictor89.github.io</url>
+        </developer>
+        <developer>
+            <name>Nico Bastian</name>
         </developer>
     </developers>
     <contributors/>
