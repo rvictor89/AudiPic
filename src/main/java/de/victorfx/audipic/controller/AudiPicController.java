@@ -2,7 +2,7 @@ package de.victorfx.audipic.controller;
 
 import de.victorfx.audipic.model.SettingsStore;
 import de.victorfx.audipic.painter.IPainter;
-import de.victorfx.audipic.painter.MagicPainter;
+import de.victorfx.audipic.painter.MagicPainter2;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
@@ -97,16 +97,20 @@ public class AudiPicController implements Initializable {
         canvas.setHeight(height);
         context = canvas.getGraphicsContext2D();
 
+        preparePainter(width, height);
+    }
+
+    private void preparePainter(int width, int height) {
         for (int i = 0; i < 16; i++) {
-            painters.add(new MagicPainter());
+            painters.add(new MagicPainter2());
         }
 
-        for (int i = 0; i < painters.size(); i++) {
+        for (IPainter painter : painters) {
             Canvas canvas = new Canvas();
             canvas.setHeight(height);
             canvas.setWidth(width);
             canvasPane.getChildren().add(canvas);
-            painters.get(i).setGraphicContextForMagic(canvas.getGraphicsContext2D(), canvas.getWidth(), canvas.getHeight(), settingsStore);
+            painter.setGraphicContextForMagic(canvas.getGraphicsContext2D(), canvas.getWidth(), canvas.getHeight(), settingsStore);
         }
 
         colorList = getColorForPainter(painters.size());
