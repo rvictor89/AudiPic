@@ -97,7 +97,7 @@ public class AudiPicController implements Initializable {
         canvas.setHeight(height);
         context = canvas.getGraphicsContext2D();
 
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 16; i++) {
             painters.add(new MagicPainter());
         }
 
@@ -106,7 +106,7 @@ public class AudiPicController implements Initializable {
             canvas.setHeight(height);
             canvas.setWidth(width);
             canvasPane.getChildren().add(canvas);
-            painters.get(painters.size() - 1 - i).setGraphicContextForMagic(canvas.getGraphicsContext2D(), canvas.getWidth(), canvas.getHeight(), settingsStore);
+            painters.get(i).setGraphicContextForMagic(canvas.getGraphicsContext2D(), canvas.getWidth(), canvas.getHeight(), settingsStore);
         }
 
         colorList = getColorForPainter(painters.size());
@@ -143,6 +143,7 @@ public class AudiPicController implements Initializable {
             mediaPlayer.setAudioSpectrumInterval(settingsStore.getSpektrum_interval());
             mediaPlayer.setAudioSpectrumNumBands(painters.size());
             mediaPlayer.setAudioSpectrumThreshold(-100);
+            settingsStore.setSpektrumThreshold(mediaPlayer.getAudioSpectrumThreshold());
             mediaPlayer.setAutoPlay(true);
             disableAllInputs(true);
             pausebtn.setDisable(false);

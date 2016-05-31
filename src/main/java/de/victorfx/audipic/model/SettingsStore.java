@@ -17,8 +17,18 @@ public class SettingsStore {
     private int line_width = 2;
     private int lineFactor = 1;
     private int diffMultiplikator = 10;
+    private int spektrumThreshold;
     private boolean dynamicLines = true;
     private String type = "Lines";
+    private Color bgColor = Color.WHITE;
+
+    public int getSpektrumThreshold() {
+        return spektrumThreshold;
+    }
+
+    public void setSpektrumThreshold(int spektrumThreshold) {
+        this.spektrumThreshold = spektrumThreshold;
+    }
 
     public Color getBgColor() {
         return bgColor;
@@ -27,8 +37,6 @@ public class SettingsStore {
     public void setBgColor(Color bgColor) {
         this.bgColor = bgColor;
     }
-
-    private Color bgColor = Color.WHITE;
 
     public String getType() {
         return type;
