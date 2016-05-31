@@ -99,7 +99,7 @@
                             </VBox.margin>
                         </Label>
                         <TextField fx:id="inputDiffMultiplikator" prefHeight="25.0" prefWidth="0.0"
-                                   promptText="Default: 10">
+                                   promptText="Default: 0">
                             <VBox.margin>
                                 <Insets bottom="5.0" top="5.0"/>
                             </VBox.margin>

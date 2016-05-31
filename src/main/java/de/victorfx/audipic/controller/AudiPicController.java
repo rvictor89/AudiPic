@@ -173,7 +173,7 @@ public class AudiPicController implements Initializable {
         settingsStore.setBgColor(colorPickerBg.getValue());
         settingsStore.setSpektrum_interval(inputInterval.getText().isEmpty() ? 0.1 : Double.parseDouble(inputInterval.getText()));
         settingsStore.setDynamicLines(checkDynamicLines.isSelected());
-        settingsStore.setDiffMultiplikator(inputDiffMultiplikator.getText().isEmpty() ? 10 : Integer.parseInt(inputDiffMultiplikator.getText()));
+        settingsStore.setDiffMultiplikator(inputDiffMultiplikator.getText().isEmpty() ? 0 : Integer.parseInt(inputDiffMultiplikator.getText()));
         settingsStore.setMultiplikatror(inputMultiplikator.getText().isEmpty() ? 8 : Integer.parseInt(inputMultiplikator.getText()));
         settingsStore.setType(choiceBox.getValue().toString());
         if (!settingsStore.isDynamicLines()) {
