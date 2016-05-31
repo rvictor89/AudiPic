@@ -38,6 +38,8 @@ import java.util.ResourceBundle;
  * @author Ramon Victor Mai 2016.
  */
 public class AudiPicController implements Initializable {
+    private static final int AUDIO_SPECTRUM_THRESHOLD = -100;
+    private static final int BAND_COUNT = 10;
     @FXML
     private Canvas canvas;
     @FXML
@@ -101,7 +103,7 @@ public class AudiPicController implements Initializable {
     }
 
     private void preparePainter(int width, int height) {
-        for (int i = 0; i < 16; i++) {
+        for (int i = 0; i < BAND_COUNT; i++) {
             painters.add(new MagicPainter2());
         }
 
@@ -146,7 +148,7 @@ public class AudiPicController implements Initializable {
             }
             mediaPlayer.setAudioSpectrumInterval(settingsStore.getSpektrum_interval());
             mediaPlayer.setAudioSpectrumNumBands(painters.size());
-            mediaPlayer.setAudioSpectrumThreshold(-100);
+            mediaPlayer.setAudioSpectrumThreshold(AUDIO_SPECTRUM_THRESHOLD);
             settingsStore.setSpektrumThreshold(mediaPlayer.getAudioSpectrumThreshold());
             mediaPlayer.setAutoPlay(true);
             disableAllInputs(true);
@@ -172,7 +174,7 @@ public class AudiPicController implements Initializable {
         settingsStore.setSpektrum_interval(inputInterval.getText().isEmpty() ? 0.1 : Double.parseDouble(inputInterval.getText()));
         settingsStore.setDynamicLines(checkDynamicLines.isSelected());
         settingsStore.setDiffMultiplikator(inputDiffMultiplikator.getText().isEmpty() ? 10 : Integer.parseInt(inputDiffMultiplikator.getText()));
-        settingsStore.setMultiplikatror(inputMultiplikator.getText().isEmpty() ? 20 : Integer.parseInt(inputMultiplikator.getText()));
+        settingsStore.setMultiplikatror(inputMultiplikator.getText().isEmpty() ? 8 : Integer.parseInt(inputMultiplikator.getText()));
         settingsStore.setType(choiceBox.getValue().toString());
         if (!settingsStore.isDynamicLines()) {
             settingsStore.setLine_width(inputLinesWidth.getText().isEmpty() ? 2 : Integer.parseInt(inputLinesWidth.getText()));

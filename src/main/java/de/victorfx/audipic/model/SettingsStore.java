@@ -13,7 +13,7 @@ public class SettingsStore {
     public static final String TEXTS = "Texts";
 
     private double spektrum_interval = 0.1;
-    private int multiplikatror = 20;
+    private int multiplikatror = 8;
     private int line_width = 2;
     private int lineFactor = 1;
     private int diffMultiplikator = 10;

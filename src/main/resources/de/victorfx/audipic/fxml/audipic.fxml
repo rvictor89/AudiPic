@@ -88,12 +88,12 @@
                             </VBox.margin>
                         </Label>
                         <TextField fx:id="inputMultiplikator" prefHeight="25.0" prefWidth="20.0"
-                                   promptText="Default: 20">
+                                   promptText="Default: 8">
                             <VBox.margin>
                                 <Insets bottom="5.0" top="5.0"/>
                             </VBox.margin>
                         </TextField>
-                        <Label text="Zusatzmultiplikator:">
+                        <Label text="Abstand:">
                             <VBox.margin>
                                 <Insets bottom="5.0" top="5.0"/>
                             </VBox.margin>
@@ -110,7 +110,7 @@
                                 <Insets bottom="5.0" top="5.0"/>
                             </VBox.margin>
                         </CheckBox>
-                        <Label text="Line Width:">
+                        <Label text="Line Größe:">
                             <VBox.margin>
                                 <Insets bottom="5.0" top="5.0"/>
                             </VBox.margin>
@@ -120,7 +120,7 @@
                                 <Insets bottom="5.0" top="5.0"/>
                             </VBox.margin>
                         </TextField>
-                        <Label text="Line Factor:">
+                        <Label text="Line Divisor:">
                             <VBox.margin>
                                 <Insets bottom="5.0" top="5.0"/>
                             </VBox.margin>
