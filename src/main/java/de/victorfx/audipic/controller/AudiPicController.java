@@ -38,8 +38,9 @@ import java.util.ResourceBundle;
  * @author Ramon Victor Mai 2016.
  */
 public class AudiPicController implements Initializable {
-    private static final int AUDIO_SPECTRUM_THRESHOLD = -100;
     private static final int BAND_COUNT = 10;
+    @FXML
+    private TextField inputThreshold;
     @FXML
     private Canvas canvas;
     @FXML
@@ -148,8 +149,7 @@ public class AudiPicController implements Initializable {
             }
             mediaPlayer.setAudioSpectrumInterval(settingsStore.getSpektrum_interval());
             mediaPlayer.setAudioSpectrumNumBands(painters.size());
-            mediaPlayer.setAudioSpectrumThreshold(AUDIO_SPECTRUM_THRESHOLD);
-            settingsStore.setSpektrumThreshold(mediaPlayer.getAudioSpectrumThreshold());
+            mediaPlayer.setAudioSpectrumThreshold(settingsStore.getSpektrumThreshold());
             mediaPlayer.setAutoPlay(true);
             disableAllInputs(true);
             pausebtn.setDisable(false);
@@ -175,6 +175,7 @@ public class AudiPicController implements Initializable {
         settingsStore.setDynamicLines(checkDynamicLines.isSelected());
         settingsStore.setDiffMultiplikator(inputDiffMultiplikator.getText().isEmpty() ? 0 : Integer.parseInt(inputDiffMultiplikator.getText()));
         settingsStore.setMultiplikatror(inputMultiplikator.getText().isEmpty() ? 8 : Integer.parseInt(inputMultiplikator.getText()));
+        settingsStore.setSpektrumThreshold(inputThreshold.getText().isEmpty() ? (-100) : Integer.parseInt(inputThreshold.getText()));
         settingsStore.setType(choiceBox.getValue().toString());
         if (!settingsStore.isDynamicLines()) {
             settingsStore.setLine_width(inputLinesWidth.getText().isEmpty() ? 2 : Integer.parseInt(inputLinesWidth.getText()));

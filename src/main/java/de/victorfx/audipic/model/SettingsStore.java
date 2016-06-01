@@ -17,7 +17,7 @@ public class SettingsStore {
     private int line_width = 2;
     private int lineFactor = 1;
     private int diffMultiplikator = 0;
-    private int spektrumThreshold;
+    private int spektrumThreshold = (-100);
     private boolean dynamicLines = true;
     private String type = "Lines";
     private Color bgColor = Color.WHITE;

@@ -50,7 +50,14 @@
                                 <Insets bottom="5.0" top="5.0"/>
                             </VBox.margin>
                         </Button>
-                        <Separator/>
+                        <Separator>
+                            <opaqueInsets>
+                                <Insets/>
+                            </opaqueInsets>
+                            <padding>
+                                <Insets top="10.0"/>
+                            </padding>
+                        </Separator>
                         <Label text="Artstyle:">
                             <VBox.margin>
                                 <Insets bottom="5.0" top="5.0"/>
@@ -126,6 +133,16 @@
                             </VBox.margin>
                         </Label>
                         <TextField fx:id="inputLinesFactor" prefHeight="25.0" prefWidth="0.0" promptText="Standard: 1">
+                            <VBox.margin>
+                                <Insets bottom="5.0" top="5.0"/>
+                            </VBox.margin>
+                        </TextField>
+                        <Label text="Threshold:">
+                            <VBox.margin>
+                                <Insets bottom="5.0" top="5.0"/>
+                            </VBox.margin>
+                        </Label>
+                        <TextField fx:id="inputThreshold" prefHeight="25.0" prefWidth="0.0" promptText="Standard: -100">
                             <VBox.margin>
                                 <Insets bottom="5.0" top="5.0"/>
                             </VBox.margin>
