@@ -205,6 +205,7 @@ public class AudiPicController implements Initializable {
         inputInterval.setDisable(value);
         checkDynamicLines.setDisable(value);
         choiceBox.setDisable(value);
+        inputThreshold.setDisable(value);
         if (value) {
             inputLinesWidth.disableProperty().unbind();
             inputLinesWidth.setDisable(value);
