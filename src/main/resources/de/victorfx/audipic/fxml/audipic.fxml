@@ -84,7 +84,8 @@
                                 <Insets bottom="5.0" top="5.0"/>
                             </VBox.margin>
                         </Label>
-                        <TextField fx:id="inputInterval" prefHeight="25.0" prefWidth="86.0" promptText="Standard: 0.1">
+                        <TextField fx:id="inputInterval" prefHeight="25.0" prefWidth="86.0"
+                                   promptText="Standard: 0.033">
                             <VBox.margin>
                                 <Insets bottom="5.0" top="5.0"/>
                             </VBox.margin>
