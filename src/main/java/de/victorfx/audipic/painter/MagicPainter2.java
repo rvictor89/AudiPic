@@ -1,6 +1,8 @@
 package de.victorfx.audipic.painter;
 
 import de.victorfx.audipic.model.SettingsStore;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.effect.BlendMode;
 import javafx.scene.paint.Color;

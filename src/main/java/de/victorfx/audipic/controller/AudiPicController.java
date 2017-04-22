@@ -279,8 +279,8 @@ public class AudiPicController implements Initializable {
             int seconds = (int) mediaPlayer.getCurrentTime().toSeconds() % 60;
             int minutesDuration = (int) mediaPlayer.getTotalDuration().toMinutes() % 60;
             int secondsDuration = (int) mediaPlayer.getTotalDuration().toSeconds() % 60;
-            durationLabel.setText(String.format("Zeit: %02d:%02d / %02d:%02d", minutes, seconds, minutesDuration,
-                    secondsDuration));
+            Platform.runLater(() -> durationLabel.setText(String.format("Zeit: %02d:%02d / %02d:%02d", minutes, seconds, minutesDuration,
+                    secondsDuration)));
         }
     }
 
@@ -299,7 +299,7 @@ public class AudiPicController implements Initializable {
             long tmpElapsedTime = now - tmpTime;
             currentFramerate = 1_000_000_000 / elapsedTime;
             if (tmpElapsedTime >= 1_000_000_000) {
-                fpsLabel.setText("FPS: " + String.valueOf(currentFramerate));
+                Platform.runLater(() -> fpsLabel.setText("FPS: " + String.valueOf(currentFramerate)));
                 tmpTime = now;
             }
             oldNowTime = now;
